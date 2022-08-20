@@ -1,24 +1,32 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <img alt="Vue logo" src="./assets/logo.png" />
+    <HelloWorld msg="Welcome to Your Vue.js App" />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import HelloWorld from "./components/HelloWorld.vue";
+import axios from "axios";
+// import jsonp from "jsonp";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld
+    HelloWorld,
   },
-  data(){
-    return{
-      age:30
-    }
+  data() {
+    return {
+      age: 30,
+    };
+  },
+  mounted(){
+    let url ='http://github.com/easy-mock/easy-mock'
+     axios.get(url).then(()=>{
+
+     });
   }
-}
+};
 </script>
 
 <style>
