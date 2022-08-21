@@ -7,13 +7,13 @@ module.exports = defineConfig({
     host: "localhost",
     port: 8080,
     proxy: { //代理
-      '/activity': {
+      '/api': {
         target: 'https://www.imooc.com',
         // ws: true,
-        changeOrigin: false,  //是否将主机头源点改为目标url地址
-         pathRewrite: {
-           '^/activity': '/activity'
-         }
+        changeOrigin: true,  //是否将主机头源点改为目标url地址
+        pathRewrite: {
+          '/api': ''
+        }
       }
     }
   }
