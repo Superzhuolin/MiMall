@@ -8,7 +8,7 @@
 <script>
 import HelloWorld from "./components/HelloWorld.vue";
 // import axios from "axios";
-// import jsonp from "jsonp";
+import jsonp from "jsonp";
 
 export default {
   name: "App",
@@ -22,9 +22,11 @@ export default {
     };
   },
   mounted() {
-    let url = "https://www.imooc.com/activity/servicetime";
-    // axios(url).then(() => {});
-     
+    let url = "/api/activity/servicetime";
+    jsonp(url, (err, res) => {
+      let result = res;
+      this.data = result;
+    });
   },
 };
 </script>

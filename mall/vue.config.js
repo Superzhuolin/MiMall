@@ -2,7 +2,21 @@
 const { defineConfig } = require('@vue/cli-service')
 // 导入模块
 module.exports = defineConfig({
-  transpileDependencies: true
+  // transpileDependencies: true,
+  devServer: {
+    host: "localhost",
+    port: 8080,
+    proxy: { //代理
+      '/api': {
+        target: 'https://www.imooc.com',
+        // ws: true,
+        changeOrigin: true,  //是否将主机头源点改为目标url地址
+        pathRewrite: {
+          '/api': ''
+        }
+      }
+    }
+  }
 })
 
 /* 
@@ -14,7 +28,7 @@ module.exports = defineConfig({
       '/api': {
         target: 'http://localhost:8080',
         ws: true,
-        changeOrigin: true,  //是否讲主机头
+        changeOrigin: true,  //是否将主机头源点改为目标url地址
         pathRewrite: {
           '^/api': '/mock'
         }
