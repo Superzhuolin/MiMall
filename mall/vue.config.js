@@ -2,7 +2,8 @@
 const { defineConfig } = require('@vue/cli-service')
 // 导入模块
 module.exports = defineConfig({
-  // transpileDependencies: true,
+  transpileDependencies: true,
+  lintOnSave: false,
   devServer: {
     host: "localhost",
     port: 8080,
