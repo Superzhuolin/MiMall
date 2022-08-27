@@ -10,7 +10,6 @@ import OrderConfirm from './pages/orderConfirm.vue'
 import OrderList from './pages/orderList.vue'
 import OrderPay from './pages/orderPay.vue'
 
-
 Vue.use(Router);  //vue加载Router插件
 //export是ES6的语法,通过此方式导入对象
 export default new Router({
@@ -20,7 +19,7 @@ export default new Router({
             path: '/',
             name: "home",
             component: Home,
-            redirect: "/index",
+            redirect: '/index',
             chiledren: [
                 {
                     path: '/index',
@@ -36,7 +35,13 @@ export default new Router({
                     component: Detail,
                 },
             ]
-        }, {
+        },
+        // {
+        //     path: '/index',
+        //     name: "index",
+        //     component: Index,
+        // },
+        {
             path: '/cart',
             name: "cart",
             component: Cart,
