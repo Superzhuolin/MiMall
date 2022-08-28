@@ -1,25 +1,26 @@
 import Vue from 'vue'
 import router from './router'
-import axious from "axios"
-import App from "vue-axios"  //作用域对象挂载到vue实例中
+import axios from "axios"
+import VueAxios from "vue-axios"  //作用域对象挂载到vue实例中
 import App from './App.vue'  //主键
-import VueAxios from 'vue-axios'
-import { axios } from 'vue/types/umd'
+import env from "./env"  //  ./表示当前目录 若没有会被当成插件
 
 // 为发请求时设置基础值
 //根据前端的跨域方式做调整  (接口代理  前端域名跟接口域名是一样的)
-axios.defaults.baseURL="/api";  // /a/b  :/api/a/b=>/a/b
-axios.defaults.timeout=8000;  //设置超出时间
+axios.defaults.baseURL = "/api";  // /a/b  :/api/a/b=>/a/b
+axios.defaults.timeout = 8000;  //设置超出时间
+//根据环境变量获取不同的请求地址
+axios.defaults.baseURL = env.baseURL;
 
 //接口错误拦截
 axios.interceptors.response.use(function (response) {
   let res = response.data;//取到的接口值
-  if(res.status == 0){ //状态码为0代表成功
+  if (res.status == 0) { //状态码为0代表成功
     return res.data;//接口返回值
   } else if (res.status == 10) {  //状态码为10代表未登录
     //main.js中无法用路由跳转页面,因为路由挂载在vue实例中
-     window.location.href = "/#/login" //跳转到登录页面
-  }else{
+    window.location.href = "/#/login" //跳转到登录页面
+  } else {
     alert(res.msg);
   }
 })
