@@ -15,7 +15,10 @@ export default {
   },
   mounted() {
     // storage.setItem("a", 1);
-    storage.setItem("user", { a: 1 });
+    // storage.setItem("user", { d: 5 });
+    // storage.setItem("abc", { a: 1 }, "user");
+    // storage.clear("a");
+    storage.clear("d", "user");
   },
 };
 // {"user":{"userName":"jack","age":30,"sex":1}}
