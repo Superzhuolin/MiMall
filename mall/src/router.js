@@ -19,10 +19,7 @@ export default new Router({
             path: '/',
             name: "home",
             component: Home,
-            //问题:无法显示子级index内容(页面空白)
-            // 所以你现在能够展示内容吗,我已经注释了
-            //你把index删了,当然展示不了index啊
-            // redirect: '/index',
+            redirect: '/index',
             children: [
                 {
                     path: '/index',
@@ -38,12 +35,7 @@ export default new Router({
                     component: Detail,
                 },
             ]
-        },//同级可以显示
-        // {
-        //     path: '/index',
-        //     name: "index",
-        //     component: Index,
-        // },
+        },
         {
             path: '/cart',
             name: "cart",
