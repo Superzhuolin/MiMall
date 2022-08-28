@@ -6,3 +6,4 @@ export default {
   name: "alipay",
 };
 </script>
+ 
