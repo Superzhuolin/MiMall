@@ -9,6 +9,7 @@ import Order from './pages/order.vue'
 import OrderConfirm from './pages/orderConfirm.vue'
 import OrderList from './pages/orderList.vue'
 import OrderPay from './pages/orderPay.vue'
+import AliPay from './pages/alipay.vue'
 
 Vue.use(Router);  //vue加载Router插件
 //export是ES6的语法,通过此方式导入对象
@@ -45,19 +46,23 @@ export default new Router({
             path: '/order',
             name: "order",
             component: Order,
-            chiledren: [
+            children: [
                 {
-                    path: '/list',
+                    path: 'list',
                     name: "order-list",
                     component: OrderList,
                 }, {
-                    path: '/confirm',
+                    path: 'confirm',
                     name: "order-confirm",
                     component: OrderConfirm,
                 }, {
-                    path: '/pay',
+                    path: 'pay',
                     name: "order-pay",
                     component: OrderPay,
+                }, {
+                    path: 'alipay',
+                    name: "alipay",
+                    component: AliPay,
                 },
             ]
         },
