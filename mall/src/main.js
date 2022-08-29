@@ -5,9 +5,16 @@ import VueAxios from "vue-axios"  //把axios对象挂载到vue实例中
 import App from './App.vue'  //主键
 //import env from "./env"  //  ./表示当前目录 若没有会被当成插件
 
+//mock开关
+const mock = true;
+if(mock){
+  require("./mock/api");
+}
+
 // 为发请求时设置基础值
 //根据前端的跨域方式做调整  (接口代理  前端域名跟接口域名是一样的)
-// axios.defaults.baseURL = "/api";  // /a/b  :/api/a/b=>/a/b
+ // /a/b  :/api/a/b=>/a/b
+axios.defaults.baseURL = "/api"; 
 axios.defaults.timeout = 8000;  //设置超出时间
 //根据环境变量获取不同的请求地址
 // axios.defaults.baseURL = env.baseURL;
