@@ -1,0 +1,14 @@
+//flex布局复用
+@mixin flex($hov: space-between, $col: center) {
+    display: flex; //:设置元素两边对齐  中间居中
+    justify-content: $hov; //水平方向居中
+    align-items: $col; //垂直方向居中
+}
+
+@mixin bgImg($w:0,$g:0,$img:"",$size:contain) {
+    display: inline-block;
+    width: $w;
+    height:$g;
+    background: url($img) no-repeat center;
+    background-size: $size;//等比缩放(会留白边)
+}
