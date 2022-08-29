@@ -3,22 +3,26 @@
     <!-- 顶部栏 -->
     <div class="nav-topbar">
       <div class="container">
+        <!-- 左边栏 -->
         <div class="topbar-menu">
           <a href="javascript:;">小米商城</a>
           <a href="javascript:;">MUI</a>
           <a href="javascript:;">云服务</a>
           <a href="javascript:;">协议规则</a>
         </div>
+        <!-- 右边栏 -->
         <div class="topbar-user">
           <a href="javascript:;">登录</a>
           <a href="javascript:;">注册</a>
           <a href="javascript:;" class="my-cart">
+            <!-- 购物车图标 -->
             <span class="icon-cart"></span>
             购物车
           </a>
         </div>
       </div>
     </div>
+
     <!-- 导航栏 -->
     <div class="nav-header">
       <div class="container">
@@ -74,10 +78,10 @@ export default {
       .my-cart {
         width: 110px;
         background-color: #ff6600;
-        text-align: center;  
+        text-align: center;
         color: #ffffff;
         .icon-cart {
-          @include bgImg(16px,12px,"/public/imgs/icon-cart-checked.png");
+          @include bgImg(16px, 12px, "/public/imgs/icon-cart-checked.png");
           margin-right: 4px;
         }
       }
@@ -86,7 +90,7 @@ export default {
   .nav-header {
     .container {
       height: 112px;
-     @include flex();
+      @include flex();
       .header-logo {
         display: inline-block;
         width: 55px;
@@ -98,12 +102,12 @@ export default {
           height: 55px;
           &:before {
             content: ""; //占位 生成伪类
-          @include bgImg(55px,55px,"/public/imgs/mi-logo.png",55px);
+            @include bgImg(55px, 55px, "/public/imgs/mi-logo.png", 55px);
             transition: margin 0.2s; //过渡动画
           }
           &:after {
             content: ""; //占位 生成伪类
-          @include bgImg(55px,55px,"/public/imgs/mi-home.png",55px);
+            @include bgImg(55px, 55px, "/public/imgs/mi-home.png", 55px);
           }
           &:hover:before {
             margin-left: -55px;
@@ -146,7 +150,7 @@ export default {
             padding-left: 14px;
           }
           a {
-          @include bgImg(18px,18px,"/public/imgs/icon-search.png");
+            @include bgImg(18px, 18px, "/public/imgs/icon-search.png");
             margin-left: 17px;
           }
         }
