@@ -18,7 +18,28 @@
         </div>
       </div>
     </div>
-    <div class="nav-hearder"></div>
+    <div class="nav-header">
+      <div class="container">
+        <div class="header-logo">
+          <a href="/#/index"></a>
+        </div>
+        <div class="header-menu">
+          <div class="item-menu">
+            <span>小米手机</span>
+            <div class="children"></div>
+          </div>
+          <div class="item-menu">
+            <span>RemMi红米手机</span>
+            <div class="children"></div>
+          </div>
+          <div class="item-menu">
+            <span>电视</span>
+            <div class="children"></div>
+          </div>
+        </div>
+        <div class="header-search"></div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -28,6 +49,7 @@ export default {
 };
 </script> 
 <style lang="scss">
+@import "/src/assets/scss/base.scss";
 .header {
   .nav-topbar {
     height: 39px;
@@ -35,9 +57,6 @@ export default {
     background-color: #333333;
     color: #b0b0b0;
     .container {
-      width: 1226px;
-      margin-right: auto;
-      margin-left: auto;
       display: flex; //:设置元素两边对齐  中间居中
       justify-content: space-between; //水平方向居中
       align-items: center; //垂直方向居中
@@ -55,9 +74,67 @@ export default {
           display: inline-block;
           width: 16px;
           height: 12px;
-          margin-right: 4px   ;
+          margin-right: 4px;
           background: url("/public/imgs/icon-cart-checked.png") no-repeat center;
           background-size: contain;
+        }
+      }
+    }
+  }
+  .nav-header {
+    .container {
+      height: 112px;
+      display: flex; //:设置元素两边对齐  中间居中
+      justify-content: space-between; //水平方向居中
+      align-items: center; //垂直方向居中
+      .header-logo {
+        display: inline-block;
+        width: 55px;
+        height: 55px;
+        background-color: #ff6600;
+        a {
+          display: inline-block;
+          width: 110px;
+          height: 55px;
+          &:before {
+            content: ""; //占位 生成伪类
+            display: inline-block;
+            width: 55px;
+            height: 55px;
+            background: url("/public/imgs/mi-logo.png") no-repeat center;
+            background-size: 55px;
+            transition: margin 0.2s; //过渡动画
+          }
+          &:after {
+            content: ""; //占位 生成伪类
+            display: inline-block;
+            width: 55px;
+            height: 55px;
+            background: url("/public/imgs/mi-home.png") no-repeat center;
+            background-size: 55px;
+          }
+          &:hover:before {
+            margin-left: -55px;
+            transition: margin 0.2s; //过渡动画
+          }
+        }
+      }
+      .header-menu {
+        display: inline-block;
+        width: 220px;
+        padding-left: 209px;
+        .item-menu {
+          display: inline-block;
+          color: #333333;
+          font-weight: bold;
+          font-size: 16px;
+          line-height: 112px;
+          span {
+            cursor: pointer; //鼠标带手
+          }
+          &:hover{
+            
+          }
         }
       }
     }
