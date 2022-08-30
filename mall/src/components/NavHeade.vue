@@ -26,9 +26,11 @@
     <!-- 导航栏 -->
     <div class="nav-header">
       <div class="container">
+        <!-- logo -->
         <div class="header-logo">
           <a href="/#/index"></a>
         </div>
+
         <div class="header-menu">
           <div class="item-menu">
             <span>小米手机</span>
@@ -63,6 +65,7 @@ export default {
 @import "/src/assets/scss/base.scss";
 @import "/src/assets/scss/mixin.scss";
 .header {
+  // 顶部栏
   .nav-topbar {
     height: 39px;
     line-height: 39px;
@@ -76,6 +79,7 @@ export default {
         margin-right: 17px;
       }
       .my-cart {
+        //购物车
         width: 110px;
         background-color: #ff6600;
         text-align: center;
@@ -87,6 +91,7 @@ export default {
       }
     }
   }
+  //导航栏
   .nav-header {
     .container {
       height: 112px;
@@ -101,12 +106,12 @@ export default {
           width: 110px;
           height: 55px;
           &:before {
-            content: ""; //占位 生成伪类
+            content: " "; //占位 生成伪类
             @include bgImg(55px, 55px, "/public/imgs/mi-logo.png", 55px);
             transition: margin 0.2s; //过渡动画
           }
           &:after {
-            content: ""; //占位 生成伪类
+            content: " "; //占位 生成伪类
             @include bgImg(55px, 55px, "/public/imgs/mi-home.png", 55px);
           }
           &:hover:before {
