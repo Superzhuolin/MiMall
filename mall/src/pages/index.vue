@@ -7,6 +7,10 @@
           <swiper-slide v-for="(item, index) in swiperList" :key="index">
             <a :href="'/#/product/' + item.id"><img :src="item.img" /></a>
           </swiper-slide>
+          <!-- Optional controls -->
+          <div class="swiper-pagination" slot="pagination"></div>
+          <div class="swiper-button-prev" slot="button-prev"></div>
+          <div class="swiper-button-next" slot="button-next"></div>
         </swiper>
       </div>
       <!-- 广告界面 -->
@@ -33,7 +37,23 @@ export default {
   },
   data() {
     return {
-      swiperOption: {},
+      swiperOption: {
+        autoplay: true, //设置自动播放
+        loop: true, //循环点击
+        effect: "cube", //切换效果
+        cubeEffect: {
+          shadowOffset: 100,
+          shadowScale: 0.6,
+        }, //分页器
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+        }, //前进后退按钮
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        },
+      },
       swiperList: [
         {
           id: "42",
@@ -53,7 +73,7 @@ export default {
         },
         {
           id: "",
-          img: "/public/imgs/slider/slide-5.jpg",
+          img: "/imgs/slider/slide-5.jpg",
         },
       ],
     };
