@@ -31,8 +31,8 @@
         <div class="header-logo">
           <a href="/#/index"></a>
         </div>
-
         <div class="header-menu">
+          <!-- 小米手机 -->
           <div class="item-menu">
             <span>小米手机</span>
             <div class="children">
@@ -53,9 +53,11 @@
               </ul>
             </div>
           </div>
+          <!-- RemMi红米手机 -->
           <div class="item-menu">
             <span>RemMi红米手机</span>
           </div>
+          <!-- 电视 -->
           <div class="item-menu">
             <span>电视</span>
             <div class="children">
@@ -64,8 +66,7 @@
                   <a href="" target="_blank">
                     <div class="pro-img">
                       <!-- <img src="../../public/imgs/nav-img/nav-1.png" alt="读取失败" /> -->
-                      <img src="/imgs/nav-img/nav-1.png" alt="读取失败" />
-                      <!-- <img src="/public/imgs/nav-img/nav-1.png" alt="读取失败" /> -->
+                      <img src="/imgs/nav-img//nav-3-1.jpg" alt="读取失败" />
                     </div>
                     <div class="pro-name">小米壁画电视 65英寸</div>
                     <div class="pro-price">6999元</div>
@@ -74,10 +75,7 @@
                 <li class="product">
                   <a href="" target="_blank">
                     <div class="pro-img">
-                      <img
-                        src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/a687e796bb4879cd0e93867177f800da.png?thumb=1&w=342&h=342&f=webp&q=90"
-                        alt=""
-                      />
+                      <img src="imgs/nav-img/nav-3-2.jpg" alt="" />
                     </div>
                     <div class="pro-name">小米全面屏电视</div>
                     <div class="pro-price">1999</div>
@@ -86,10 +84,7 @@
                 <li class="product">
                   <a href="" target="_blank">
                     <div class="pro-img">
-                      <img
-                        src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/a687e796bb4879cd0e93867177f800da.png?thumb=1&w=342&h=342&f=webp&q=90"
-                        alt=""
-                      />
+                      <img src="imgs/nav-img/nav-3-3.png" alt="" />
                     </div>
                     <div class="pro-name">小米电视4A 32英寸</div>
                     <div class="pro-price">699</div>
@@ -98,10 +93,7 @@
                 <li class="product">
                   <a href="" target="_blank">
                     <div class="pro-img">
-                      <img
-                        src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/a687e796bb4879cd0e93867177f800da.png?thumb=1&w=342&h=342&f=webp&q=90"
-                        alt=""
-                      />
+                      <img src="imgs/nav-img/nav-3-4.jpg" alt="" />
                     </div>
                     <div class="pro-name">小米电视4A 55英寸</div>
                     <div class="pro-price">1799</div>
@@ -110,10 +102,7 @@
                 <li class="product">
                   <a href="" target="_blank">
                     <div class="pro-img">
-                      <img
-                        src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/a687e796bb4879cd0e93867177f800da.png?thumb=1&w=342&h=342&f=webp&q=90"
-                        alt=""
-                      />
+                      <img src="imgs/nav-img/nav-3-5.jpg" alt="" />
                     </div>
                     <div class="pro-name">小米电视4A 65英寸</div>
                     <div class="pro-price">2699</div>
@@ -122,10 +111,7 @@
                 <li class="product">
                   <a href="" target="_blank">
                     <div class="pro-img">
-                      <img
-                        src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/a687e796bb4879cd0e93867177f800da.png?thumb=1&w=342&h=342&f=webp&q=90"
-                        alt=""
-                      />
+                      <img src="imgs/nav-img/nav-3-6.png" alt="" />
                     </div>
                     <div class="pro-name">查看全部</div>
                     <div class="pro-price">小米电视</div>
@@ -177,9 +163,10 @@ export default {
           },
         })
         .then((res) => {
-          if (res.list.length >= 6) {
-            this.phoneList = res.list.slice(0, 6);
-          }
+          // if (res.list.length >= 6) {
+          //   this.phoneList = res.list.slice(0, 6);
+          // }
+          this.phoneList = res.list;
         });
     },
     goToCart() {
@@ -273,7 +260,7 @@ export default {
           .children {
             position: absolute;
             top: 112px;
-            left: 0px;
+            left: 0;
             width: 1226px;
             height: 0;
             opacity: 0;
@@ -282,6 +269,7 @@ export default {
             box-shadow: 0px 7px 6px 0px rgba(0, 0, 0, 0.11);
             z-index: 10;
             transition: height 0.5s; //控制高度做动画
+            background-color: #ffffff; //设置背景色为白色,避免被其他颜色覆盖
 
             .product {
               position: relative;
