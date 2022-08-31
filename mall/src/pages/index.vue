@@ -5,7 +5,7 @@
       <div class="swiper-box">
         <swiper :options="swiperOption">
           <swiper-slide v-for="(item, index) in swiperList" :key="index">
-            <a :href="'/#/product' + item.id"><img :src="item.img" /></a>
+            <a :href="'/#/product/' + item.id"><img :src="item.img" /></a>
           </swiper-slide>
         </swiper>
       </div>
@@ -20,18 +20,16 @@
   </div>
 </template>
 <script>
-import { swiper, swiperSlide } from "vue-awesome-swiper";
-import "swiper/css/swiper.css";
-import Swiper from "swiper";
-// import "swiper/dist/css/swiper.css";
-// import "swiper/css/swiper.css";
+import ServiceBar from "./../components/ServiceBar.vue";
+import { swiper, swiperSlide } from "swiper/vue";
+import "swiper/css";
 
 export default {
   name: "index",
   components: {
     ServiceBar,
-    SwiperSlide,
-    Swiper,
+    swiperSlide,
+    swiper,
   },
   data() {
     return {
@@ -63,15 +61,15 @@ export default {
 };
 </script>
 <style lang="scss">
-// .index {
-//   .swiper-box {
-//     // .swiper-container {
-//     //   height: 451px;
-//     //   img {
-//     //     width: 100%;
-//     //     height: 100%;
-//     //   }
-//     // }
-//   }
-// }
+.index {
+  .swiper-box {
+    .swiper-container {
+      height: 451px;
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+}
 </style>
