@@ -21,8 +21,8 @@
 </template>
 <script>
 import ServiceBar from "./../components/ServiceBar.vue";
-import { swiper, swiperSlide } from "swiper/vue";
-import "swiper/css";
+import { swiper, swiperSlide } from "vue-awesome-swiper";
+import "swiper/dist/css/swiper.css";
 
 export default {
   name: "index",
