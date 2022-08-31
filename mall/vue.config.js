@@ -9,7 +9,7 @@ module.exports = defineConfig({
     port: 8080,
     proxy: { //代理
       '/api': {
-        target: 'https://www.imooc.com',
+        target: 'http://mall-pre.springboot.cn', //可能是http
         // ws: true,
         changeOrigin: true,  //是否将主机头源点改为目标url地址
         pathRewrite: {
