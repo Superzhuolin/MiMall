@@ -77,9 +77,7 @@
         >
           <!-- 图片懒加载减轻前端服务器带宽压力,动态加载图片,图片未处理有默认替换图片
           通过鼠标滚动慢慢再加载出来 -->
-
           <img v-lazy="item.img" alt="" />
-          <!-- <img :src="item.img" alt="" /> -->
         </a>
       </div>
       <!-- 横幅界面 -->
@@ -96,7 +94,7 @@
         <div class="wrapper">
           <!-- 左边产品 -->
           <div class="banner-left">
-            <a href="/#/product/35"><img src="/imgs/mix-alpha.jpg" alt="" /></a>
+            <a href="/#/product/35"><img v-lazy="'/imgs/mix-alpha.jpg'" alt="" /></a>
           </div>
           <!-- 右边明细 -->
           <div class="list-box">
@@ -104,7 +102,7 @@
               <div class="item" v-for="(item, j) in arr" :key="j">
                 <span :class="{ 'new-pro': j % 2 == 2 }">新品</span>
                 <div class="item-img">
-                  <img :src="item.mainImage" />
+                  <img v-lazy="item.mainImage" />
                 </div>
                 <div class="item-info">
                   <h3>{{ item.name }}</h3>
