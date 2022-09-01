@@ -1,12 +1,23 @@
 .modal {
     @include position(fixed);
     z-index: 10;
+    transition: all .5s;
 
     .mask {
         @include position(fixed);
         background-color: $colorI;
         opacity: 0.5;
     }
+
+    &.slide-enter-active {
+        top: 0;
+    }
+
+    &.slide-leave-active,
+    &.slide-enter {
+        top: -100%;
+    }
+
 
     .modal-dialog {
         // 让弹框水平/垂直方向都居中:
@@ -23,23 +34,26 @@
 
             .icon-close {
                 @include positionImg(absolute, 23px, 25px, 14px, 14px, "/public/imgs/icon-close.png");
-                transition:transform .3s;
+                transition: transform .3s;
+
                 &:hover {
                     transform: scale(1.5);
                 }
             }
         }
-        .modal-body{
+
+        .modal-body {
             padding: 42px 40px 54px;
             font-size: 14px;
-             
+
         }
-        .modal-footer{
-             height: 82px;
-             line-height: 82px;
-             text-align: center;
-             background-color: $colorJ;
-              
+
+        .modal-footer {
+            height: 82px;
+            line-height: 82px;
+            text-align: center;
+            background-color: $colorJ;
+
         }
     }
 }
