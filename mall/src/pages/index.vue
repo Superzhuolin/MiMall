@@ -1,12 +1,14 @@
 <template>
   <div class="index">
     <div class="container">
+      <!--主界面 -->
       <div class="swiper-box">
-        <!-- 导航菜单 -->
+        <!-- 左边:导航菜单 -->
         <div class="nav-menu">
           <ul class="menu-wrap">
             <li class="menu-item">
               <a href="javascript:;">手机 电话卡 </a>
+              <!-- 菜单详细列表 -->
               <div class="children">
                 <ul v-for="(item, i) in menuList" :key="i">
                   <li v-for="(sub, j) in item" :key="j">
@@ -14,10 +16,7 @@
                       :href="sub ? '/#/product/' + sub.id : ''"
                       target="_blank"
                     >
-                      <img
-                        :src="sub ? sub.img : '/imgs/item-box-1.png'"
-                        alt="加载失败"
-                      />
+                      <img :src="sub ? sub.img : '/imgs/item-box-1.png'" />
                       {{ sub ? sub.name : "小米9" }}
                     </a>
                   </li>
@@ -58,7 +57,7 @@
             </li>
           </ul>
         </div>
-        <!-- 轮播界面 -->
+        <!-- 右边:轮播界面 -->
         <swiper :options="swiperOption">
           <swiper-slide v-for="(item, index) in swiperList" :key="index">
             <a :href="'/#/product/' + item.id"><img :src="item.img" /></a>
@@ -70,9 +69,23 @@
         </swiper>
       </div>
       <!-- 广告界面 -->
-      <div class="abs-box"></div>
+      <div class="abs-box">
+        <a
+          :href="'/#/product/' + item.id"
+          v-for="(item, index) in adsList"
+          :key="index"
+        >
+          <!-- 图片懒加载减轻前端服务器带宽压力,动态加载图片,图片未处理有默认替换图片
+          通过鼠标滚动慢慢再加载出来 -->
+          <img :src="item.img" alt="" />
+        </a>
+      </div>
       <!-- 横幅界面 -->
-      <div class="banner"></div>
+      <div class="banner">
+        <a href="/#/product/30">
+          <img src="/imgs/banner-1.png" alt="" />
+        </a>
+      </div>
       <!-- 产品界面 -->
       <div class="product-box"></div>
     </div>
@@ -161,6 +174,24 @@ export default {
         [0, 0, 0, 0],
         [0, 0, 0, 0],
       ],
+      adsList: [
+        {
+          id: 33,
+          img: "/imgs/ads/ads-1.png",
+        },
+        {
+          id: 48,
+          img: "/imgs/ads/ads-2.jpg",
+        },
+        {
+          id: 45,
+          img: "/imgs/ads/ads-3.png",
+        },
+        {
+          id: 47,
+          img: "/imgs/ads/ads-4.jpg",
+        },
+      ],
     };
   },
 };
@@ -176,7 +207,8 @@ export default {
       width: 264px;
       height: 451px;
       z-index: 9;
-      padding: 26px 0;
+      // padding: 26px 0;
+      padding: 2px 0;
       background-color: #55585a7a;
       box-sizing: border-box; //定义盒子模型(保持尺寸)
       .menu-wrap {
@@ -249,6 +281,18 @@ export default {
         height: 100%;
       }
     }
+  }
+  .abs-box {
+    @include flex();
+    margin-top: 14px;
+    margin-bottom: 31px;
+    a {
+      width: 296px;
+      height: 167px;
+    }
+  }
+  .banner {
+    margin-bottom: 50px;
   }
 }
 </style>
