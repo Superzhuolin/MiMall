@@ -14,4 +14,4 @@ export default new Vuex.Store({
     state,//state存储数据
     actions,//传输数据
     mutations,//读取改变数据
-});
+});  

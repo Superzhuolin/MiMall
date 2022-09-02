@@ -17,9 +17,10 @@ export default {
     this.getCartCount();
   },
   methods: {
+    //页面刷新后通过mounted(钩子)再次读取用户名
     getUser() {
       this.axios.get("/user").then((res) => {
-        this.$store.dispatch("saveUserName", res.username); //刷新后再次保存用户名
+        this.$store.dispatch("saveUserName", res.username);
       });
     },
     getCartCount() {

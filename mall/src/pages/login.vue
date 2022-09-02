@@ -19,7 +19,7 @@
               placeholder="请输入密码"
               v-model="password"
             />
-          </div>
+          </div> 
           <div class="btn-box">
             <a href="javascript:;" class="btn" @click="login">登录</a>
           </div>
@@ -52,7 +52,7 @@
   </div>
 </template>
 <script>
-// import { mapActions } from 'vuex';
+import { mapActions } from "vuex"; //从vuex中解构mapActions对象
 export default {
   name: "login",
   data() {
@@ -73,12 +73,15 @@ export default {
         })
         .then((res) => {
           this.$cookie.set("userId", res.id, { expires: "1M" }); //设置用户ID
-         /*  登录时通过dispatch派发action行为saveUserName,action行为会提交commit到
+
+          /*  登录时通过dispatch派发action行为saveUserName,action行为会提交commit到
          mutation,mutation会自动提交到state状态里面去做出改变.从而状态会重新重新渲染视图. */
-          this.$store.dispatch("saveUserName",res.username);//读取后,保存用户名
+          // this.$store.dispatch("saveUserName",res.username);//读取后,保存用户名
+          this.saveUserName(res.username);
           this.$router.push("/index"); //回到首页
         });
     },
+    ...mapActions(["saveUserName"]),
     register() {
       this.axios
         .post("/user/login", {
