@@ -18,7 +18,7 @@
           <a href="javascript:;" @click="goToCart" class="my-cart">
             <!-- 购物车图标 -->
             <span class="icon-cart"></span>
-            购物车
+            购物车({{cartCount}})
           </a>
         </div>
       </div>
@@ -66,7 +66,10 @@
                   <a href="" target="_blank">
                     <div class="pro-img">
                       <!-- <img src="../../public/imgs/nav-img/nav-1.png" alt="读取失败" /> -->
-                      <img v-lazy="'/imgs/nav-img//nav-3-1.jpg'" alt="读取失败" />
+                      <img
+                        v-lazy="'/imgs/nav-img//nav-3-1.jpg'"
+                        alt="读取失败"
+                      />
                     </div>
                     <div class="pro-name">小米壁画电视 65英寸</div>
                     <div class="pro-price">6999元</div>
@@ -137,9 +140,17 @@ export default {
   name: "nav-header",
   data() {
     return {
-      username: "",
       phoneList: [],
     };
+  },
+  computed: {
+    // 解决延迟问题:username发生变化时会重新计算一次
+    username() {
+      return this.$store.state.username; //读取后共享:获取到axios后,读取数据(用户名)
+    },
+    cartCount() {
+      return this.$store.state.cartCount; 
+    },
   },
   filters: {
     currency(val) {

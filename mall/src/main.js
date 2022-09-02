@@ -4,7 +4,7 @@ import axios from "axios"
 import VueAxios from "vue-axios"  //把axios对象挂载到vue实例中
 import VueLazyLoad from 'vue-lazyload'  //懒加载
 import VueCookie from 'vue-cookie'
-import store from './store'  //默认读取里面的index.js
+import store from './store/index'  //默认读取里面的index.js
 
 import App from './App.vue'  //主键
 
