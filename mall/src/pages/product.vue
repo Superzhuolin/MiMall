@@ -66,7 +66,7 @@
             <video src="/imgs/product/video.mp4" muted autoplay controls></video>
           </div>
         </div>
-        
+
       </div>
     </div>
   </div>
@@ -195,7 +195,7 @@ export default {
           width: 1000px;  //视频组件宽高
           height: 536px;
           opacity: 0; //起初透明,后逐渐可见
-          transition: all 3s;
+          transition: all .6s;
           // 点击过渡效果
           &.slide {
             top: 50%;
