@@ -55,30 +55,18 @@
           后置960帧电影般超慢动作视频，将眨眼间的美妙展现得淋漓尽致！<br />
           更能AI 精准分析视频内容，15个场景智能匹配背景音效。
         </p>
-
-        <div class="video-bg"></div>
+        <!-- 实现点击背景图片播放视频功能 -->
+        <div class="video-bg" @click="showSlide = true"></div>
         <div class="video-box">
-          <div class="overlay"></div>
-          <div class="video">
-            <span class="icon-close"></span>
-            <video
-              src="/imgs/product/video.mp4"
-              muted
-              autoplay
-              controls
-            ></video>
+          <!-- 播放视频时:阴影效果 -->
+          <div class="overlay" v-if="showSlide"></div>
+          <!-- 视频组件 -->
+          <div class="video" :class="{ slide: showSlide }">
+            <span class="icon-close" @click="showSlide = false"></span>
+            <video src="/imgs/product/video.mp4" muted autoplay controls></video>
           </div>
         </div>
-
-        <!-- <div class="video-bg" @click="showSlide='slideDown'"></div>
-
-        <div class="video-box" v-show="showSlide">
-          <div class="overlay"></div>
-          <div class="video" v-bind:class="showSlide">
-            <span class="icon-close" @click="closeVideo"></span>
-            <video src="/imgs/product/video.mp4" muted autoplay controls="controls"></video>
-          </div>
-        </div> -->
+        
       </div>
     </div>
   </div>
@@ -95,6 +83,7 @@ export default {
   },
   data() {
     return {
+      showSlide: false,
       swiperOption: {
         autoplay: true,
         slidesPerView: 3,
@@ -191,29 +180,39 @@ export default {
       }
       .video-box {
         .overlay {
+          // 播放视频时:阴影效果
           @include position(fixed);
           background-color: #333333;
           opacity: 0.4;
           z-index: 10;
         }
         .video {
-          position: fixed;
-          top: 50%;
+          position: fixed;//网页定位视频窗口
+          top: -50%; //起初看不见,后逐渐可见
           left: 50%;
-          transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);//延X轴和延Y轴均移动50%
           z-index: 10;
-          width: 1000px;
+          width: 1000px;  //视频组件宽高
           height: 536px;
+          opacity: 0; //起初透明,后逐渐可见
+          transition: all 3s;
+          // 点击过渡效果
+          &.slide {
+            top: 50%;
+            opacity: 1;
+          }
+          // 关闭图标
           .icon-close {
             position: absolute;
             top: 20px;
             right: 20px;
             @include bgImg(20px, 20px, "/public/imgs/icon-close.png");
             cursor: pointer;
-            z-index: 11 ;
+            z-index: 11;
           }
+          // 视频展示
           video {
-            width: 100%;
+            width: 100%;  //让video视频宽高撑满整个父容器
             height: 100%;
             object-fit: cover; //覆盖视频原生组件的阴影(视频内容覆盖整个窗口)
             outline: none;
