@@ -2,7 +2,6 @@
 @mixin flex($hov: space-between, $col: center) {
     display: flex; //设置弹性布局
     justify-content: $hov; //水平方向居中
-    // justify-content: $hov;
     align-items: $col; //垂直方向居中
 }
 

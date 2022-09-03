@@ -1,9 +1,26 @@
 // 订单
 <template>
-  <div>product</div>
+  <div class="product">
+    <!-- 引入产品参数组件 -->
+    <product-param>
+      <!-- v-slot:xxx（可简写为#xxx） -->
+      <template v-slot:buy>
+        <button class="btn">立即购买</button>
+      </template>
+    </product-param>
+  </div>
 </template>
 <script>
+import ProductParam from "./../components/ProductParam";
 export default {
-  name: "product",
+  name: "Product",
+  components: { ProductParam },
 };
 </script>
+<style lang="scss">
+.product {
+  button {
+    margin-left:10px;
+  }
+}
+</style>
