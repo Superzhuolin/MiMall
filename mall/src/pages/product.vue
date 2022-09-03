@@ -31,21 +31,11 @@
       <div class="item-bg-3"></div>
       <div class="item-swiper">
         <swiper :options="swiperOption">
-          <swiper-slide
-            ><img src="/imgs/product/gallery-2.png" alt=""
-          /></swiper-slide>
-          <swiper-slide
-            ><img src="/imgs/product/gallery-3.png" alt=""
-          /></swiper-slide>
-          <swiper-slide
-            ><img src="/imgs/product/gallery-4.png" alt=""
-          /></swiper-slide>
-          <swiper-slide
-            ><img src="/imgs/product/gallery-5.jpg" alt=""
-          /></swiper-slide>
-          <swiper-slide
-            ><img src="/imgs/product/gallery-6.jpg" alt=""
-          /></swiper-slide>
+          <swiper-slide><img src="/imgs/product/gallery-2.png" /></swiper-slide>
+          <swiper-slide><img src="/imgs/product/gallery-3.png" /></swiper-slide>
+          <swiper-slide><img src="/imgs/product/gallery-4.png" /></swiper-slide>
+          <swiper-slide><img src="/imgs/product/gallery-5.jpg" /></swiper-slide>
+          <swiper-slide><img src="/imgs/product/gallery-6.jpg" /></swiper-slide>
           <!-- Optional controls -->
           <div class="swiper-pagination" slot="pagination"></div>
         </swiper>
@@ -59,12 +49,12 @@
         </p>
         <!-- 实现点击背景图片播放视频功能 -->
         <div class="video-bg" @click="showSlide = 'slideDown'"></div>
-        <div class="video-box">
+        <div class="video-box" v-show="showSlide">
           <!-- 播放视频时:阴影效果 -->
-          <div class="overlay" v-if="showSlide == 'slideDown'"></div>
+          <div class="overlay"></div>
           <!-- 视频组件 -->
           <div class="video" :class="showSlide">
-            <span class="icon-close" @click="showSlide = 'slideUp'"></span>
+            <span class="icon-close" @click="closeVideo"></span>
             <video
               src="/imgs/product/video.mp4"
               muted
@@ -117,6 +107,13 @@ export default {
       let id = this.$route.params.id;
       this.$router.push(`/detail/${id}`); //跳转到商品详情页面
     },
+    closeVideo(){
+      //.6s后变量置为空,video-box就会隐藏掉了
+      this.showSlide="slideUp";
+      setTimeout(() => {
+      this.showSlide="";
+      }, (600));
+    }
   },
 };
 </script>
