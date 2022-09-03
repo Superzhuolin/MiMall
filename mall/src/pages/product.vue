@@ -186,6 +186,13 @@ export default {
           opacity: 0.4;
           z-index: 10;
         }
+        // frame动画都是成对出现的:上下拉效果
+        @keyframes slideDown {
+          
+        }
+        @keyframes slideUp {
+          
+        }
         .video {
           position: fixed;//网页定位视频窗口
           top: -50%; //起初看不见,后逐渐可见
@@ -195,12 +202,6 @@ export default {
           width: 1000px;  //视频组件宽高
           height: 536px;
           opacity: 0; //起初透明,后逐渐可见
-          transition: all .6s;
-          // 点击过渡效果
-          &.slide {
-            top: 50%;
-            opacity: 1;
-          }
           // 关闭图标
           .icon-close {
             position: absolute;
