@@ -39,6 +39,7 @@ import Vuex from "Vuex" 发现 "Vuex"应该是小写vuex才对
 
 今日小结
 1.简单复习插槽(详细的也看不懂)/JS事件监听addEventListener
+2.学习box-shadow
 2..小米商城:8-2~8-6 9-1 (7集)
 学习感悟:学到后面各组件之间功能有点混乱了,在捋顺花了不少时间
 明日计划:
