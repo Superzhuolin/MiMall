@@ -2,16 +2,16 @@
 <template>
   <div class="product">
     <!-- 引入产品参数组件 -->
-    <product-param>
+    <product-param :title="product.name">
       <!-- v-slot:xxx（可简写为#xxx） -->
       <template v-slot:buy>
-        <button class="btn">立即购买</button>
+        <button class="btn" @click="buy">立即购买</button>
       </template>
     </product-param>
     <div class="content">
       <div class="item-bg">
-        <h2>小米8</h2>
-        <h3>8周年旗舰</h3>
+        <h2>{{ product.name }}</h2>
+        <h3>{{ product.subtitle }}</h3>
         <p>
           <a href="" id="">全球首款双频 GP</a>
           <span>|</span>
@@ -22,7 +22,9 @@
           <a href="" id="">红外人脸识别</a>
         </p>
         <div class="price">
-          <span>￥<em>2599</em></span>
+          <span
+            >￥<em>{{ product.price }}</em></span
+          >
         </div>
       </div>
       <div class="item-bg-2"></div>
@@ -30,19 +32,19 @@
       <div class="item-swiper">
         <swiper :options="swiperOption">
           <swiper-slide
-            ><img src="/public/imgs/product/gallery-2.png" alt=""
+            ><img src="/imgs/product/gallery-2.png" alt=""
           /></swiper-slide>
           <swiper-slide
-            ><img src="/public/imgs/product/gallery-3.png" alt=""
+            ><img src="/imgs/product/gallery-3.png" alt=""
           /></swiper-slide>
           <swiper-slide
-            ><img src="/public/imgs/product/gallery-4.png" alt=""
+            ><img src="/imgs/product/gallery-4.png" alt=""
           /></swiper-slide>
           <swiper-slide
-            ><img src="/public/imgs/product/gallery-5.jpg" alt=""
+            ><img src="/imgs/product/gallery-5.jpg" alt=""
           /></swiper-slide>
           <swiper-slide
-            ><img src="/public/imgs/product/gallery-6.jpg" alt=""
+            ><img src="/imgs/product/gallery-6.jpg" alt=""
           /></swiper-slide>
           <!-- Optional controls -->
           <div class="swiper-pagination" slot="pagination"></div>
@@ -56,17 +58,21 @@
           更能AI 精准分析视频内容，15个场景智能匹配背景音效。
         </p>
         <!-- 实现点击背景图片播放视频功能 -->
-        <div class="video-bg" @click="showSlide ='slideDown'"></div>
+        <div class="video-bg" @click="showSlide = 'slideDown'"></div>
         <div class="video-box">
           <!-- 播放视频时:阴影效果 -->
-          <div class="overlay" v-if="showSlide=='slideDown'"></div>
+          <div class="overlay" v-if="showSlide == 'slideDown'"></div>
           <!-- 视频组件 -->
           <div class="video" :class="showSlide">
             <span class="icon-close" @click="showSlide = 'slideUp'"></span>
-            <video src="/imgs/product/video.mp4" muted autoplay controls></video>
+            <video
+              src="/imgs/product/video.mp4"
+              muted
+              autoplay
+              controls
+            ></video>
           </div>
         </div>
-
       </div>
     </div>
   </div>
@@ -83,7 +89,8 @@ export default {
   },
   data() {
     return {
-      showSlide: "",
+      showSlide: "", //控制动画效果
+      product: {}, //商品信息
       swiperOption: {
         autoplay: true,
         slidesPerView: 3,
@@ -95,6 +102,21 @@ export default {
         },
       },
     };
+  },
+  mounted() {
+    this.getProductInfo();
+  },
+  methods: {
+    getProductInfo() {
+      let id = this.$route.params.id; //获取是商品id
+      this.axios.get(`/products/${id}`).then((res) => {
+        this.product = res;
+      });
+    },
+    buy() {
+      let id = this.$route.params.id;
+      this.$router.push(`/detail/${id}`); //跳转到商品详情页面
+    },
   },
 };
 </script>
@@ -186,44 +208,42 @@ export default {
           opacity: 0.4;
           z-index: 10;
         }
-        @keyframes slideDown{
-          from{
-            top:-50%;
+        @keyframes slideDown {
+          from {
+            top: -50%;
             opacity: 0;
           }
-          to{
-            top:50%;
+          to {
+            top: 50%;
             opacity: 1;
           }
-
         }
-        @keyframes slideUp{
-          from{
-            top:50%;
+        @keyframes slideUp {
+          from {
+            top: 50%;
             opacity: 1;
           }
-          to{
-            top:-50%;
+          to {
+            top: -50%;
             opacity: 0;
           }
         }
         .video {
-          position: fixed;//网页定位视频窗口
+          position: fixed; //网页定位视频窗口
           top: -50%; //起初看不见,后逐渐可见
           left: 50%;
-          transform: translate(-50%, -50%);//延X轴和延Y轴均移动50%
+          transform: translate(-50%, -50%); //延X轴和延Y轴均移动50%
           z-index: 10;
-          width: 1000px;  //视频组件宽高
+          width: 1000px; //视频组件宽高
           height: 536px;
           opacity: 1; //起初透明,后逐渐可见
           //当他有slideDown属性时
-          &.slideDown{
-            animation: slideDown 2s  linear; 
-             top:50%;
+          &.slideDown {
+            animation: slideDown 0.6s linear;
+            top: 50%;
           }
-          &.slideUp{
-            animation: slideDown 2s  linear; 
-             top: -50%;
+          &.slideUp {
+            animation: slideUp 1s linear;
           }
           // 关闭图标
           .icon-close {
@@ -236,7 +256,7 @@ export default {
           }
           // 视频展示
           video {
-            width: 100%;  //让video视频宽高撑满整个父容器
+            width: 100%; //让video视频宽高撑满整个父容器
             height: 100%;
             object-fit: cover; //覆盖视频原生组件的阴影(视频内容覆盖整个窗口)
             outline: none;
