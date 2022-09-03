@@ -1,5 +1,6 @@
 <template>
-  <div class="nav-bar">
+  <!-- 动态绑定变量 若isFixed为true加上is_fixed类 -->
+  <div class="nav-bar" :class="{ is_fixed: isFixed }">
     <div class="container">
       <!-- 标题栏 -->
       <div class="pro-title">小米8</div>
@@ -18,17 +19,27 @@
 <script>
 export default {
   name: "nav-barr",
-  data(){
-
+  data() {
+    return {
+      isFixed: false,
+    };
   },
-  mounted(){
-    // window.addEventListener("scroll",this.inintHeight)
+  mounted() {
+    window.addEventListener("scroll", this.inintHeight);//默认通过捕获方式干掉
   },
-  methods:{
-
-  }
+  methods: {
+    inintHeight() {
+      let scrollTop =
+        window.pageYOffset ||
+        document.documentElement.scrollTop ||
+        document.body.scrollTop;
+      this.isFixed = scrollTop > 152 ? true : false;
+    },
+  },
+  destroyed() {
+    window.removeEventListener("scroll", this.inintHeight, false);//通过冒泡方式干掉
+  },
 };
-
 </script>
 <style lang="scss">
 @import "./../assets/scss/mixin.scss";
@@ -36,7 +47,14 @@ export default {
 .nav-bar {
   height: 70px;
   line-height: 70px;
-  border: 1px solid $colorH;
+  border-top: 1px solid $colorH;
+  background-color: $colorG; //设置背景色为白色，盖住背景色
+  &.is_fixed {
+    position: fixed;
+    top: 0;
+    width: 100%; //解决宽度不一样导致的样式问题
+    box-shadow: 0 5px 5px $colorE;
+  }
   .container {
     @include flex(); //设置左右结构
     .pro-title {

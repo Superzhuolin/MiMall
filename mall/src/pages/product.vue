@@ -15,6 +15,10 @@
     <div class="h">123</div>
     <div class="h">123</div>
     <div class="h">123</div>
+    <div class="h">123</div>
+    <div class="h">123</div>
+    <div class="h">123</div>
+    <div class="h">123</div>
   </div>
 </template>
 <script>
@@ -27,6 +31,7 @@ export default {
 <style lang="scss">
 .product {
   .h{
+    background-color: greenyellow;
     height: 150px;
   }
   button {
