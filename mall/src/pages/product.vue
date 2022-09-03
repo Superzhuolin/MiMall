@@ -56,13 +56,13 @@
           更能AI 精准分析视频内容，15个场景智能匹配背景音效。
         </p>
         <!-- 实现点击背景图片播放视频功能 -->
-        <div class="video-bg" @click="showSlide = true"></div>
+        <div class="video-bg" @click="showSlide ='slideDown'"></div>
         <div class="video-box">
           <!-- 播放视频时:阴影效果 -->
-          <div class="overlay" v-if="showSlide"></div>
+          <div class="overlay" v-if="showSlide=='slideDown'"></div>
           <!-- 视频组件 -->
-          <div class="video" :class="{ slide: showSlide }">
-            <span class="icon-close" @click="showSlide = false"></span>
+          <div class="video" :class="showSlide">
+            <span class="icon-close" @click="showSlide = 'slideUp'"></span>
             <video src="/imgs/product/video.mp4" muted autoplay controls></video>
           </div>
         </div>
@@ -83,7 +83,7 @@ export default {
   },
   data() {
     return {
-      showSlide: false,
+      showSlide: "",
       swiperOption: {
         autoplay: true,
         slidesPerView: 3,
@@ -186,6 +186,27 @@ export default {
           opacity: 0.4;
           z-index: 10;
         }
+        @keyframes slideDown{
+          from{
+            top:-50%;
+            opacity: 0;
+          }
+          to{
+            top:50%;
+            opacity: 1;
+          }
+
+        }
+        @keyframes slideUp{
+          from{
+            top:50%;
+            opacity: 1;
+          }
+          to{
+            top:-50%;
+            opacity: 0;
+          }
+        }
         .video {
           position: fixed;//网页定位视频窗口
           top: -50%; //起初看不见,后逐渐可见
@@ -194,12 +215,15 @@ export default {
           z-index: 10;
           width: 1000px;  //视频组件宽高
           height: 536px;
-          opacity: 0; //起初透明,后逐渐可见
-          transition: all .6s;
-          // 点击过渡效果
-          &.slide {
-            top: 50%;
-            opacity: 1;
+          opacity: 1; //起初透明,后逐渐可见
+          //当他有slideDown属性时
+          &.slideDown{
+            animation: slideDown 2s  linear; 
+             top:50%;
+          }
+          &.slideUp{
+            animation: slideDown 2s  linear; 
+             top: -50%;
           }
           // 关闭图标
           .icon-close {
