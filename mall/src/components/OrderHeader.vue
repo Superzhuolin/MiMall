@@ -26,6 +26,7 @@
 export default {
   name: "order-header",
   props:{
+    // 子组件接受父组件传递过的值
     title:String,
   }
 };
