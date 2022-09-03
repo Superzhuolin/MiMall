@@ -8,7 +8,7 @@
         <a href="javasrcipt:;">概述</a><span>|</span>
         <a href="javasrcipt:;">参数</a><span>|</span>
         <a href="javasrcipt:;">用户评价</a>
-        <!-- 插槽 -->
+        <!-- 插槽(button) -->
         <slot name="buy"></slot>
       </div>
     </div>
@@ -18,7 +18,17 @@
 <script>
 export default {
   name: "nav-barr",
+  data(){
+
+  },
+  mounted(){
+    // window.addEventListener("scroll",this.inintHeight)
+  },
+  methods:{
+
+  }
 };
+
 </script>
 <style lang="scss">
 @import "./../assets/scss/mixin.scss";
