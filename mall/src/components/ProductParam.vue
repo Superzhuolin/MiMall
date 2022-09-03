@@ -53,6 +53,7 @@ export default {
   line-height: 70px;
   border-top: 1px solid $colorH;
   background-color: $colorG; //设置背景色为白色，盖住背景色
+  z-index: 10;
   &.is_fixed {
     position: fixed;
     top: 0;
