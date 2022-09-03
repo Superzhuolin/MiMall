@@ -9,8 +9,8 @@
         </div>
         <!-- 标题 -->
         <div class="title">
-          <h2>我的购物车
-            <span>温习提示:产品是否购买成功,以最终下单为准,请尽快结算</span>  
+          <h2>{{title}}
+            <slot name="tip"></slot>
           </h2> 
         </div>
         <!-- 用户名称  右浮动 -->
@@ -25,6 +25,9 @@
 <script>
 export default {
   name: "order-header",
+  props:{
+    title:String,
+  }
 };
 //
 </script>
