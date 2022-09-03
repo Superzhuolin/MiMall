@@ -94,7 +94,9 @@
         <div class="wrapper">
           <!-- 左边产品 -->
           <div class="banner-left">
-            <a href="/#/product/35"><img v-lazy="'/imgs/mix-alpha.jpg'" alt="" /></a>
+            <a href="/#/product/35"
+              ><img v-lazy="'/imgs/mix-alpha.jpg'" alt=""
+            /></a>
           </div>
           <!-- 右边明细 -->
           <div class="list-box">
@@ -260,17 +262,19 @@ export default {
           this.phoneList = [res.list.slice(0, 4), res.list.slice(4, 8)];
         });
     },
-    addCart() {
-      this.showModal = true;
-      // this.axios
-      //   .post("/carts", {
-      //     productId: id,
-      //     selected: true,
-      //   })
-      //   .then(() => {})
-      //   .catch(() => {
-      //     this.showModal = true;
-      //   });
+    addCart(id) {
+      this.axios
+        .post("/carts", {
+          productId: id,
+          selected: true,
+        })
+        .then((res) => {
+          this.showModal = true;
+          this.$store.dispatch("saveCartCount", res.cartTotalQuantity); //更新购物车总数量
+        })
+        .catch(() => {
+          this.showModal = true;
+        });
     },
     goToCart() {
       this.$router.push("/cart");

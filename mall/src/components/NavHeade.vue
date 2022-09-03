@@ -18,7 +18,7 @@
           <a href="javascript:;" @click="goToCart" class="my-cart">
             <!-- 购物车图标 -->
             <span class="icon-cart"></span>
-            购物车({{ }})
+            购物车({{ cartCount }})
           </a>
         </div>
       </div>
@@ -136,7 +136,7 @@
 </template>
 
 <script>
-  import { mapState } from "vuex";
+import { mapState } from "vuex";
 export default {
   name: "nav-header",
   data() {
@@ -150,9 +150,9 @@ export default {
     //   return this.$store.state.username; //读取后共享:获取到axios后,读取数据(用户名)
     // },
     // cartCount() {
-    //   return this.$store.state.cartCount; 
+    //   return this.$store.state.cartCount;
     // },
-    ...mapState(["username","cartCount"])
+    ...mapState(["username", "cartCount"]),
   },
   filters: {
     currency(val) {

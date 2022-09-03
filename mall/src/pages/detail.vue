@@ -78,7 +78,7 @@ export default{
   data(){
     return {
       id: this.$route.params.id,//获取商品ID
-      // err:'',
+      err:'',
       version:1,//商品版本切换
       product:{},//商品信息
       swiperOption:{
@@ -105,14 +105,15 @@ export default{
         this.product=res;
       })
     },
+    
     addCart(){
       this.axios.post("/carts",{
         productId:this.id,
         selected:true,//加入购物车后选中
       }).then((res={cartProductVoList:0})=>{
-      this.$store.dispatch("saveCartCount", res.cartProductVoList.length);
-        this.$router.push("/cart"); 
-      })
+      this.$store.dispatch("saveCartCount", res.cartTotalQuantity);
+        // this.$router.push("/cart"); 
+      });
     }
   }
 }

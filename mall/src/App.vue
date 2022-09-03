@@ -3,12 +3,10 @@
     <router-view></router-view>
   </div>
 </template>
-
 <script>
 export default {
   name: "App",
   components: {},
-
   data() {
     return {};
   },
@@ -24,7 +22,7 @@ export default {
       });
     },
     getCartCount() {
-      this.axios.get("/carts/products/sum").then((res=0) => {
+      this.axios.get("/carts/products/sum").then((res = 0) => {
         this.$store.dispatch("saveCartCount", res); //刷新后再次保存用户名
       });
     },
