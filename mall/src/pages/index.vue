@@ -12,10 +12,9 @@
               <div class="children">
                 <ul v-for="(item, i) in menuList" :key="i">
                   <li v-for="(sub, j) in item" :key="j">
-                    <a
-                      :href="sub ? '/#/product/' + sub.id : ''"
-                      target="_blank"
-                    >
+                    <a :href="sub ? '/#/product/' + sub.id : ''"
+                    target="_blank">
+                      <!-- :href="sub ? `/#/product/${sub.id} `: ''" -->              
                       <img :src="sub ? sub.img : '/imgs/item-box-1.png'" />
                       {{ sub ? sub.name : "小米9" }}
                     </a>
@@ -94,9 +93,9 @@
         <div class="wrapper">
           <!-- 左边产品 -->
           <div class="banner-left">
-            <a href="/#/product/35"
-              ><img v-lazy="'/imgs/mix-alpha.jpg'" alt=""
-            /></a>
+            <a href="/#/product/35">
+              <img v-lazy="'/imgs/mix-alpha.jpg'" alt=""/>
+            </a>
           </div>
           <!-- 右边明细 -->
           <div class="list-box">
@@ -157,7 +156,7 @@ export default {
         loop: true, //循环点击
         effect: "cube", //切换效果
         cubeEffect: {
-          slideShadows: false,
+          slideShadows: false, //关闭阴影
           shadow: false,
           // shadowOffset: 100,
           // shadowScale: 0.6,

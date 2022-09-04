@@ -1,3 +1,4 @@
+// 产品吸顶栏
 <template>
   <!-- 动态绑定变量 若isFixed为true加上is_fixed类 -->
   <div class="nav-bar" :class="{ is_fixed: isFixed }">

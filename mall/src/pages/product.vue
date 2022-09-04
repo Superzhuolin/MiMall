@@ -44,7 +44,7 @@
       <div class="item-video">
         <h2>60帧超慢动作摄影<br />慢慢回味每一瞬间的精彩</h2>
         <p>
-          后置960帧电影般超慢动作视频，将眨眼间的美妙展现得淋漓尽致！<br />
+          后置960帧电影般超慢动作视频，将眨眼间的美妙展现得淋漓尽致！<br/>
           更能AI 精准分析视频内容，15个场景智能匹配背景音效。
         </p>
         <!-- 实现点击背景图片播放视频功能 -->
@@ -100,7 +100,7 @@ export default {
     getProductInfo() {
       let id = this.$route.params.id; //获取是商品id
       this.axios.get(`/products/${id}`).then((res) => {
-        this.product = res;
+        this.product = res;  //获取商品详情
       });
     },
     buy() {
