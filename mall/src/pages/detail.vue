@@ -99,7 +99,7 @@ export default{
     ProductParam,
     ServiceBar
   },
-  mounted(){
+  mounted(){ 
     this.getProductInfo();
   },
   methods:{

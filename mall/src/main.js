@@ -4,6 +4,8 @@ import axios from "axios"
 import VueAxios from "vue-axios"  //把axios对象挂载到vue实例中
 import VueLazyLoad from 'vue-lazyload'  //懒加载
 import VueCookie from 'vue-cookie'
+import {Message} from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
 import store from './store/index'  //默认读取里面的index.js
 
 import App from './App.vue'  //主键
@@ -38,7 +40,8 @@ axios.interceptors.response.use(function (response) {
     }
     return Promise.reject(res);     
   } else {
-    alert(res.msg);
+    // alert(res.msg);
+    Message.warning(res.msg);
     return Promise.reject(res);     
   }
 })

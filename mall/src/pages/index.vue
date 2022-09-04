@@ -418,7 +418,7 @@ export default {
               font-size: 14px;
               line-height: 24px; //字体居中
               color: $colorG;
-              // background-color: #7ecf68; //后面要删掉
+              background-color: #7ecf68; //后面要删掉
               &.new-pro {
                 background-color: #7ecf68;
               }
