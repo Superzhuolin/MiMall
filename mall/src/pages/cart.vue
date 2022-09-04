@@ -23,9 +23,11 @@
           <ul class="cart-item-list">
             <li class="cart-item" v-for="(item, index) in list" :key="index">
               <div class="item-check">
+                <!-- 单选框 -->
                 <span
                   class="checkbox"
                   :class="{ checked: item.productSelected }"
+                  @click="updataCart(item)"
                 ></span>
               </div>
               <div class="item-name">
@@ -35,15 +37,16 @@
               <div class="item-price">{{ item.productPrice }}</div>
               <div class="item-num">
                 <div class="num-box">
-                  <a href="javascript:;">-</a>
+                  <a href="javascript:;" @click="updataCart(item,'-')">-</a>
                   <!-- 添加商品数量 -->
                   <span>{{ item.quantity }}</span>
-                  <a href="javascript:;">+</a>
+                  <a href="javascript:;" @click="updataCart(item,'+')">+</a>
                 </div>
               </div>
               <!-- 小计:单件商品中价格 -->
               <div class="item-total">{{ item.productTotalPrice }}</div>
-              <div class="item-del"></div>
+              <!-- 删除按钮 -->
+              <div class="item-del" @click='delProduct(item)'></div>
             </li>
           </ul>
         </div>
@@ -94,19 +97,35 @@ export default {
       this.axios.get("/carts").then((res) => {
         this.renderData(res);
       });
-    },
+    },//更新购物车数量和单选状态
     updataCart(item,type){
       let quantity = item.quantity,
-          selected = item.selected;
-      if(tyoe == '-'){
-          if(quantity ==1){
+          selected = item.productSelected;
+      if(type == '-'){
+          if(quantity <=1){
             alert("商品至少为一件");
+            return;
           }
-      }else if(type == "+"){
-
-      }
-    }
-    ,
+          --quantity;
+      }else if(type == "+"){ 
+         if(quantity >=item.productStock){
+            alert("商品购买数量不能超过库存数量");
+            return;
+          }
+          ++quantity;
+      }else{
+        selected= !item.productSelected;// 单选
+      }//更新商品信息
+      this.axios.put(`/carts/${item.productId}`,{quantity,selected}).then((res)=>{
+        this.renderData(res);
+      })
+    },//删除功能
+    delProduct(item){
+      this.axios.delete(`/carts/${item.productId}`).then((res)=>{
+        this.renderData(res);
+      })
+    },
+    //控制全选功能
     toggleAll() {
       let url = this.allChecked ? "/carts/unSelectAll" : "/carts/selectAll";
       this.axios.put(url).then((res) => {
