@@ -15,7 +15,7 @@
         </div>
         <!-- 用户名称  右浮动 -->
         <div class="username">
-          <a href="javascript:;">Jack</a>
+          <a href="javascript:;">{{username}}</a>
         </div>
 
     </div>
@@ -23,12 +23,17 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   name: "order-header",
   props:{
     // 子组件接受父组件传递过的值
     title:String,
-  }
+  },
+    computed: {
+    ...mapState(["username"]),
+  },
 };
 //
 </script>
