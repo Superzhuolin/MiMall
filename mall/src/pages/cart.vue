@@ -58,9 +58,9 @@
             >件
           </div>
           <div class="total fr">
-            合计：<span>{{ cartTotalPrice }}</span
-            >元
-            <a href="javascript:;" class="btn">去结算</a>
+            合计：<span>{{ cartTotalPrice }}</span>元
+            <!-- 跳转到订单确定页面 -->
+            <a href="javascript:;" class="btn" @click="order">去结算</a>
           </div>
         </div>
       </div>
@@ -126,7 +126,7 @@ export default {
       })
     },
     //控制全选功能
-    toggleAll() {
+    toggleAll() { 
       let url = this.allChecked ? "/carts/unSelectAll" : "/carts/selectAll";
       this.axios.put(url).then((res) => {
         this.renderData(res);
@@ -139,6 +139,15 @@ export default {
       this.cartTotalPrice = res.cartTotalPrice;
       this.checkedNum = this.list.filter((item) => item.productSelected).length;// 过滤商品
     },
+    // 购物车下单
+    order(){
+      let isCheck = this.list.every(item=>!item.productSelected);// 购物车是否全选
+      if(isCheck){
+        alert("请选择一件商品");
+      }else{
+        this.$router.push("/order/confirm");//跳转到订单确定页面 
+      }
+    }
   },
 };
 </script>
