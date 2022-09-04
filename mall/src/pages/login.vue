@@ -53,8 +53,7 @@
 </template>
 <script>
 import { mapActions } from "vuex"; //从vuex中解构mapActions对象
-import {Message} from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css';
+// import {Message} from 'element-ui';
 export default {
   name: "login",
   data() {
@@ -92,7 +91,8 @@ export default {
           email: "amin1@163.com",
         })
         .then(() => {
-          Message.success("注册成功");
+          // Message.success("注册成功");
+          this.$message.success("注册成功");
         });
     },
   },

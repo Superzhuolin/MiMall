@@ -5,15 +5,12 @@ import VueAxios from "vue-axios"  //把axios对象挂载到vue实例中
 import VueLazyLoad from 'vue-lazyload'  //懒加载
 import VueCookie from 'vue-cookie'
 import {Message} from 'element-ui'
-import 'element-ui/lib/theme-chalk/index.css'
+import 'element-ui/lib/theme-chalk/index.css' //只需引入一次
 import store from './store/index'  //默认读取里面的index.js
-
 import App from './App.vue'  //主键
-
 //import env from "./env"  //  ./表示当前目录 若没有会被当成插件
 
-//mock开关
-const mock = false;
+const mock = false;//mock开关
 if (mock) {
   require("./mock/api");
 }
@@ -51,7 +48,8 @@ Vue.use(VueCookie);  //加载插件
 Vue.use(VueLazyLoad, {
   loading: '/public/imgs/loading-svg/loading-bars.svg'
 });  //加载懒加载插件
-Vue.config.productionTip = false  //生产环境提示
+Vue.prototype.$message=Message;//使用对象方式扩展uL插件
+Vue.config.productionTip = false;  //生产环境提示
 
 new Vue({
   store,

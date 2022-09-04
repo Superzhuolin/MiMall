@@ -73,8 +73,7 @@
 import OrderHeader from "./../components/OrderHeader.vue";
 import NavFooter from "./../components/NavFooter.vue";
 import ServiceBar from "./../components/ServiceBar";
-import {Message} from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css';
+// import {Message} from 'element-ui';
 export default {
   name: "cart",
   components: {
@@ -105,13 +104,15 @@ export default {
           selected = item.productSelected;
       if(type == '-'){
           if(quantity <=1){
-            Message.warning("商品至少为一件");
+            // Message.warning("商品至少为一件");
+            this.$message.warning("商品至少为一件");
             return;
           }
           --quantity;
       }else if(type == "+"){ 
          if(quantity >=item.productStock){
-            Message.warning("商品购买数量不能超过库存数量");
+            // Message.warning("商品购买数量不能超过库存数量");
+            this.$message.warning("商品购买数量不能超过库存数量");
             return;
           }
           ++quantity;
@@ -124,7 +125,8 @@ export default {
     },//删除功能
     delProduct(item){
       this.axios.delete(`/carts/${item.productId}`).then((res)=>{
-        Message.success("删除成功");
+        // Message.success("删除成功");
+        this.$message.success("删除成功");//全局插件用法
         this.renderData(res);
       })
     },
