@@ -6,10 +6,10 @@ module.exports = defineConfig({
   lintOnSave: false,
   devServer: {
     host: "localhost",
-    port: 8080,
+    port: 8080,  //你好
     proxy: { //代理
       '/api': {
-        target: 'http://mall-pre.springboot.cn', //可能是http
+        target: 'http://mall-pre.springboot.cn', 
         // ws: true,
         changeOrigin: true,  //是否将主机头源点改为目标url地址
         pathRewrite: {
