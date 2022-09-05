@@ -11,8 +11,10 @@ export default {
     return {};
   },
   mounted() {
-    this.getUser();
-    this.getCartCount();
+    if(this.$cookie.get("userId")){//若userId为true,则当前为登录状态
+      this.getUser();
+      this.getCartCount();
+    }
   },
   methods: {
     //页面刷新后通过mounted(钩子)再次读取用户名

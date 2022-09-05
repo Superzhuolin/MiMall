@@ -15,6 +15,7 @@
           <a href="javascript:;" v-if="username">{{ username }}</a>
           <a href="javascript:;" v-if="username">我的订单</a>
           <a href="javascript:;" v-if="!username" @click="login">登录</a>
+          <a href="javascript:;" v-if="username" @click="logout">退出</a>
           <a href="javascript:;" @click="goToCart" class="my-cart">
             <!-- 购物车图标 -->
             <span class="icon-cart"></span>
@@ -162,6 +163,10 @@ export default {
   },
   mounted() {
     this.getProductlist();
+    let params = this.$route.params;
+    if(params && params.from =="login"){//从购物车过来订单
+      this.getCartCount();
+    }
   },
   methods: {
     login() {
@@ -181,6 +186,21 @@ export default {
           // }
           this.phoneList = res.list;
         });
+    },  
+    getCartCount() {
+      this.axios.get("/carts/products/sum").then((res = 0) => {
+        this.$store.dispatch("saveCartCount", res); //刷新后再次保存用户名
+      });
+    },
+    //退出
+    logout(){
+        this.axios.post("/user/logout").then(() => {
+          this.$message.success("退出成功");
+          this.$cookie.set("userId","",{expires:"-1"});  //使cookie中的ueseId即刻过期
+          this.$store.dispatch("saveUserName","");// 把vuex中的username数据清空
+          this.$store.dispatch("saveCartCount", "0"); //把购物车数量清空
+
+        }); 
     },
     goToCart() {
       this.$router.push("/cart"); //跳转购物车

@@ -73,13 +73,24 @@ export default {
           password, //传参 简写
         })
         .then((res) => {
-          this.$cookie.set("userId", res.id, { expires: "1M" }); //设置用户ID
+          // this.$cookie.set("userId", res.id, { expires: "1M" }); //设置用户ID
+          this.$cookie.set("userId", res.id, { expires: "Session" }); //设置用户ID
 
           /*  登录时通过dispatch派发action行为saveUserName,action行为会提交commit到
          mutation,mutation会自动提交到state状态里面去做出改变.从而状态会重新重新渲染视图. */
           // this.$store.dispatch("saveUserName",res.username);//读取后,保存用户名
           this.saveUserName(res.username);
-          this.$router.push("/index"); //回到首页
+          // this.$router.push("/index"); //回到首页
+          this.$router.push({
+            // path:"/index",
+            // query:{
+            //   from:"login"
+            // }
+            name:"index",
+            params:{
+              from:"login"
+            }
+          }); //回到首页
         });
     },
     ...mapActions(["saveUserName"]),
