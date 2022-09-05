@@ -5,6 +5,9 @@
         <span>请认真填写收货地址</span>
       </template>
     </order-header> -->
+
+    <!-- svg是矢量图(高清图)  开发中常用png/jpg格式(会失真)
+    代码量减少且不会拉请求(可以优化前端性能) -->
     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="position: absolute; width: 0px; height: 0px; overflow: hidden;">
       <defs>
         <symbol id="icon-add" viewBox="0 0 31 32">
@@ -30,33 +33,33 @@
           <div class="item-address">
             <h2 class="addr-title">收货地址</h2>
             <div class="addr-list clearfix">
-              <div class="addr-info">
-                <h2>河畔一角</h2>
-                <div class="phone">176****1717</div>
-                <div class="street">北京 北京市 昌平区 回龙观<br>东大街地铁</div>
-                <div class="action">
+              <div class="addr-info" v-for="(item,index) in list" :key="index">
+                <!-- 用户信息 -->
+                <h2>{{item.receiverName}} </h2>
+                <div class="phone">{{item.receiverMobile}}</div>
+                <div class="street">
+                  {{item.receiverProvince +""+item.receiverCity+''+
+                    item.receiverDistrict+""+item.receiverAddress}}
+                  </div>
+
+                    <!-- 功能按钮 -->
+                <div class="action ">
                   <a href="javascript:;" class="fl">
-                    <svg class="icon icon-del"><use xlink:href="#icon-del"></use></svg>
+                    <!-- 删除功能 -->
+                    <svg class="icon icon-del">
+                      <use xlink:href="#icon-del"></use>
+                    </svg>
                   </a>
                   <a href="javascript:;" class="fr">
-                    <svg class="icon icon-edit"><use xlink:href="#icon-edit"></use></svg>
+                    <!-- 编辑功能 -->
+                    <svg class="icon icon-edit">
+                      <use xlink:href="#icon-edit"></use>
+                    </svg>
                   </a>
                 </div>
+
               </div>
-              <div class="addr-info">
-                <h2>小马哥</h2>
-                <div class="phone">176****1717</div>
-                <div class="street">北京 北京市 昌平区 回龙观<br>东大街地铁</div>
-                <div class="action">
-                  <a href="javascript:;" class="fl">
-                    <svg class="icon icon-del"><use xlink:href="#icon-del"></use></svg>
-                  </a>
-                  <a href="javascript:;" class="fr">
-                    <svg class="icon icon-edit"><use xlink:href="#icon-edit"></use></svg>
-                  </a>
-                </div>
-              </div>
-              <div class="addr-add" @click="openAddressModal">
+              <div class="addr-add">
                 <div class="icon-add"></div>
                 <div>添加新地址</div>
               </div>
@@ -116,12 +119,11 @@
           </div>
           <div class="btn-group">
             <a href="/#/cart" class="btn btn-default btn-large">返回购物车</a>
-            <a href="javascript:;" class="btn btn-large" @click="orderSubmit">去结算</a>
+            <a href="javascript:;" class="btn btn-large" >去结算</a>
           </div>
         </div>
       </div>
     </div>
-    <div></div>
     <!-- <modal
       title="新增确认"
       btnType="1"
@@ -174,15 +176,24 @@ export default{
     return {
       list:[],//收获地址列表
       cartList:[],//购物车需要结算的商品列表
+      cartTotalPrice:0//商品总金额
     }
   },
   mounted(){
+    this.getAddressList();
   },
   methods:{
     getAddressList(){
       this.axios.get("/shippings").then((res)=>{
         //status=0时返回的是res.data  所以不用写res.data
         this.list=res.list;//获取地址列表中的数据
+      })
+    },
+    getCartList(){
+      this.axios.get("/carts").then((res)=>{
+        let list = res.cartProductVoList;//获取购物车中所有商品的数据
+        this.cartTotalPrice=res.cartTotalPrice;//商品中金额
+        this.cartList=list.filter(item=>item.productSelected);//获取商品的选中状态
       })
     }
   }
