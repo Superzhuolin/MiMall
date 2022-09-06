@@ -42,15 +42,14 @@
                     item.receiverDistrict+""+item.receiverAddress}}
                   </div>
 
-                    <!-- 功能按钮 -->
                 <div class="action ">
-                  <a href="javascript:;" class="fl">
+                  <a href="javascript:;" class="fl" @click="delAddress(item)">
                     <!-- 删除功能 -->
                     <svg class="icon icon-del">
                       <use xlink:href="#icon-del"></use>
                     </svg>
                   </a>
-                  <a href="javascript:;" class="fr">
+                  <a href="javascript:;" class="fr" >
                     <!-- 编辑功能 -->
                     <svg class="icon icon-edit">
                       <use xlink:href="#icon-edit"></use>
@@ -65,24 +64,17 @@
               </div>
             </div>
           </div>
-          <div class="item-good">
+          <div class="item-good" >
             <h2>商品</h2>
             <ul>
-              <li>
+              <li v-for="(item,index) in cartList" :key="index">
                 <div class="good-name">
-                  <img src="/imgs/item-box-3-1.png" alt="">
-                  <span>小米8 6GB 全息幻彩紫 64GB</span>
+                  <!-- <img v-lazt="item.productMainImage" alt=""> -->
+                  <img v-lazy="item.productMainImage" alt="">
+                  <span>{{item.productName+""+item.productSubtitle}}</span>
                 </div>
-                <div class="good-price">1999元x2</div>
-                <div class="good-total">1999元</div>
-              </li>
-              <li>
-                <div class="good-name">
-                  <img src="/imgs/item-box-3-1.png" alt="">
-                  <span>小米8 6GB 全息幻彩紫 64GB</span>
-                </div>
-                <div class="good-price">1999元x2</div>
-                <div class="good-total">1999元</div>
+                <div class="good-price">{{item.productPrice}}元✖{{item.quantity}}</div>
+                <div class="good-total">{{item.productTotalPrice}}元</div>
               </li>
             </ul>
           </div>
@@ -98,11 +90,11 @@
           <div class="detail">
             <div class="item">
               <span class="item-name">商品件数：</span>
-              <span class="item-val">1件</span>
+              <span class="item-val">{{count}}件</span>
             </div>
             <div class="item">
               <span class="item-name">商品总价：</span>
-              <span class="item-val">2599元</span>
+              <span class="item-val">{{cartTotalPrice}}元</span>
             </div>
             <div class="item">
               <span class="item-name">优惠活动：</span>
@@ -114,7 +106,7 @@
             </div>
             <div class="item-total">
               <span class="item-name">应付总额：</span>
-              <span class="item-val">2599元</span>
+              <span class="item-val">{{cartTotalPrice}}元</span>
             </div>
           </div>
           <div class="btn-group">
@@ -124,30 +116,32 @@
         </div>
       </div>
     </div>
+
     <!-- <modal
-      title="新增确认"
+      title="删除确认"
       btnType="1"
       :showModal="showEditModal"
       @cancel="showEditModal=false"
+      @submit="submitAddress"
     >
       <template v-slot:body>
         <div class="edit-wrap">
           <div class="item">
-            <input type="text" class="input" placeholder="姓名">
-            <input type="text" class="input" placeholder="手机号">
+            <input type="text" class="intput" placeholder="姓名">
+            <input type="text" class="intput" placeholder="手机号 ">
           </div>
           <div class="item">
-            <select name="province">
+            <select name="province" >
               <option value="北京">北京</option>
               <option value="天津">天津</option>
               <option value="河北">河北</option>
             </select>
-            <select name="city">
+            <select name="city" >
               <option value="北京">北京</option>
               <option value="天津">天津</option>
               <option value="河北">石家庄</option>
             </select>
-            <select name="district">
+            <select name="district" >
               <option value="北京">昌平区</option>
               <option value="天津">海淀区</option>
               <option value="河北">东城区</option>
@@ -157,30 +151,51 @@
             </select>
           </div>
           <div class="item">
-            <textarea name="street"></textarea>
+            <textarea name="street" ></textarea>
           </div>
           <div class="item">
-            <input type="text" class="input" placeholder="邮编">
+            <input type="text" class="intput" placeholder="邮编 ">
           </div>
         </div>
       </template>
     </modal> -->
+
+    <modal
+      title="删除确认"
+      btnType="1"
+      :showModal="showEditModal"
+      @cancel="showEditModal=false"
+      @submit="submitAddress"
+    >
+      <template v-slot:body>
+        <p>您确定要删除此地址吗</p>
+      </template>
+    </modal>
   </div>
 </template>
 <script>
 // import OrderHeader from './../components/OrderHeader'
-// import Modal from './../components/Modal'
+import Modal from './../components/Modal'
 export default{
   name:'order-confirm',
   data(){
     return {
       list:[],//收获地址列表
       cartList:[],//购物车需要结算的商品列表
-      cartTotalPrice:0//商品总金额
+      cartTotalPrice:0,//商品总金额
+      count:0,//商品结算数量
+      checkedItem:{},//选中的商品状态
+      userAction:"",//用户行为  0:新增  1:编辑  2:删除
+      showEditModal:false,//是否显示删除弹框
     }
   },
+  components:{
+    Modal,
+  }
+  ,
   mounted(){
     this.getAddressList();
+    this.getCartList();
   },
   methods:{
     getAddressList(){
@@ -189,11 +204,49 @@ export default{
         this.list=res.list;//获取地址列表中的数据
       })
     },
+    delAddress(item){
+      this.checkedItem = item;
+      this.userAction = 2;
+      this.showEditModal=true;
+    },
+    // 地址删除/编辑/新增功能
+    submitAddress(){
+      let {checkedItem,userAction} = this ; //对象解构语法
+      let method,url;
+      if(userAction == 0 ){//新增
+        method="post",url="/shippings"
+      }else if(userAction == 1){//编辑
+         method = 'put',url = `/shippings/${checkedItem.id}`;
+      }else{//删除
+        method = 'delete',url = `/shippings/${checkedItem.id}`;
+
+      }
+      // this.axios[method](url).then(()=>{
+      //     this.closeModal();
+      //     this.getAddressList();//防止不同账号数据不统一,需要重新拉数据
+      //     this.$message.success("操作成功");
+      // });
+      this.axios[method](url).then(()=>{
+        this.closeModal();
+        this.getAddressList();
+        this.$message.success('操作成功');
+      });
+    },
+    closeModal(){
+      this.checkedItem = {};
+      this.userAction = "";
+      this.showDelModal = false;
+      // this.showEditModal=false;
+    }
+    ,
     getCartList(){
       this.axios.get("/carts").then((res)=>{
         let list = res.cartProductVoList;//获取购物车中所有商品的数据
         this.cartTotalPrice=res.cartTotalPrice;//商品中金额
         this.cartList=list.filter(item=>item.productSelected);//获取商品的选中状态
+        this.cartList.map((item)=>{ 
+          this.count +=item.quantity;//将购物车中每种商品的数量都加给count
+        })
       })
     }
   }
