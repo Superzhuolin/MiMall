@@ -1,15 +1,21 @@
 <template>
   <div class="ali-pay">
-     
+    <loading v-if="loading"></loading>
+     <div class="form" v-html="content"></div>
   </div>
 </template>
 <script>
+ import Loading from "./../components/Loading.vue";
 export default {
   name: "alipay",
+  components:{
+    Loading,
+  },
   data(){
       return{
         orderId:this.$route.query.orderId,
-        content:""
+        content:"",
+        loading:true,
       }
   },
   mounted(){
@@ -24,6 +30,9 @@ export default {
         payType:1 //1支付宝，2微信
       }).then((res)=>{//res就是data
         this.content =res.content;
+        setTimeout(()=>{
+          document.forms[0].submit();
+        },100)
       })
     }
   }
