@@ -1,3 +1,4 @@
+// 支付宝跳转页面的加载
 <template>
   <div class="loading">
     <img src="/imgs/loading-svg/loading-bars.svg" alt="" />
