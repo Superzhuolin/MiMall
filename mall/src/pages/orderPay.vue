@@ -53,9 +53,9 @@
           <h3>选择以下支付方式付款</h3>
           <div class="pay-way">
             <p>支付平台</p>
-            <div class="pay pay-ali "></div>
-            <div class="pay pay-wechat"></div>
-          </div>
+            <div class="pay pay-ali " :class="{'checked':payType==1}" @click="paySubmit(1)"></div>
+            <div class="pay pay-wechat" :class="{'checked':payType==2}" @click="paySubmit(2)"></div>
+          </div>  
         </div>
       </div>
     </div>
@@ -69,25 +69,35 @@ export default{
   name:'order-pay',
   data(){
     return{
-      orderNo:this.$route.query.orderNo,
+      orderId:this.$route.query.orderNo,
       addresInfo:"",//收货人地址
-      orderDetail:"",//包含商品列表的订单详情
+      orderDetail:[],//包含商品列表的订单详情
       showDetail:false,//是否显示订单详情
+      payType:"",//支付类型
     }
   },
   mounted(){
-    this.getOrderDateil();
+    this.getOrderDetail();
   },
   methods:{
-    getOrderDateil(){
+    getOrderDetail(){
       //调用接口
-      this.axios.get(`/orders/${this.orderNo}`).then((res)=>{
+      this.axios.get(`/orders/${this.orderId}`).then((res)=>{
         let item = res.shippingVo;//购物车地址实体
         this.addresInfo = `${item.receiverName}     ${item.receiverMobile}
                            ${item.receiverProvince} ${item.receiverCity} 
                            ${item.receiverDistrict} ${item.receiverAddress}`
         this.orderDetail = res.orderItemVoList;
       })
+    },
+    paySubmit(payType){
+      if(payType ==1){
+      //打开新的窗口(要拼接id)
+        // window.open("/#/order/alipay?orderId"+this.orderNo,"_blank");
+        window.open('/#/order/alipay?orderId='+this.orderId,'_blank');
+
+      }
+
     }
   }
 }
