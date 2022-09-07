@@ -27,7 +27,7 @@
           <div class="item-detail" v-if="showDetail">
             <div class="item">
               <div class="detail-title">订单号：</div>
-              <div class="detail-info theme-color">{{orderNo}}</div>
+              <div class="detail-info theme-color">{{orderId}}</div>
             </div>
             <div class="item">
               <div class="detail-title">收货信息：</div>
@@ -59,14 +59,22 @@
         </div>
       </div>
     </div>
-    <!-- <scan-pay-code v-if="showPay"></scan-pay-code> -->  
+    <!-- 传递给ScanPayCode  命名为payImg的img图片  -->
+    <scan-pay-code v-if="showPay" @close="closePayModal" :img="payImg">
+    </scan-pay-code>   
   </div>
 </template>
 <script>
 // import OrderHeader from './../components/OrderHeader'
-// import ScanPayCode from './../components/ScanPayCode'
+import ScanPayCode from './../components/ScanPayCode'
+import QRcode from "qrcode"
 export default{
   name:'order-pay',
+  components:{
+    QRcode,
+    ScanPayCode
+  }
+  ,
   data(){
     return{
       orderId:this.$route.query.orderNo,
@@ -74,6 +82,8 @@ export default{
       orderDetail:[],//包含商品列表的订单详情
       showDetail:false,//是否显示订单详情
       payType:"",//支付类型
+      showPay:false,//是否显示微信支付弹框
+      payImg:'',//微信支付的二维码弹框
     }
   },
   mounted(){
@@ -93,12 +103,30 @@ export default{
     paySubmit(payType){
       if(payType ==1){
       //打开新的窗口(要拼接id)
-        // window.open("/#/order/alipay?orderId"+this.orderNo,"_blank");
         window.open('/#/order/alipay?orderId='+this.orderId,'_blank');
-
       }
-
+      else{
+          this.axios.post("/pay",{
+            orderId:this.orderId,
+            orderName:"Vue高仿小米商城", //扫码支付时订单名称
+            amount:0.01, //单位元
+            payType:2 //1支付宝，2微信
+          }).then((res)=>{//res就是data
+            QRcode.toDataURL(res.content)  //调用接口拿到服务端返回的字符串
+            .then(url=>{  
+            //通过QRcode二维码插件,讲字符串转化为base64位的图片,并将图片保存后传给子组件渲染
+              this.showPay = true; //支付成功,弹框显示
+              this.payImg = url ; //支付二维码图片=url地址
+            }).catch( ()=>{
+              this.$message.error("微信支付二维码生成失败,请稍后重试");
+            })
+          })
+      }
+    },//关闭微信弹框
+    closePayModal(){
+       this.showPay = false;
     }
+
   }
 }
 </script>

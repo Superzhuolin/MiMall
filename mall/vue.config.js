@@ -17,7 +17,8 @@ module.exports = defineConfig({
         }
       }
     }
-  }
+  },
+  // lintOnSave:false//关闭Eslink校验
 })
 
 /* 
