@@ -67,11 +67,11 @@
 <script>
 // import OrderHeader from './../components/OrderHeader'
 import ScanPayCode from './../components/ScanPayCode'
-import QRcode from "qrcode"
+import QRCode from "qrcode"
 export default{
   name:'order-pay',
   components:{
-    QRcode,
+    QRCode,
     ScanPayCode
   }
   ,
@@ -112,9 +112,9 @@ export default{
             amount:0.01, //单位元
             payType:2 //1支付宝，2微信
           }).then((res)=>{//res就是data
-            QRcode.toDataURL(res.content)  //调用接口拿到服务端返回的字符串
+            QRCode.toDataURL(res.content)  //调用接口拿到服务端返回的字符串
             .then(url=>{  
-            //通过QRcode二维码插件,讲字符串转化为base64位的图片,并将图片保存后传给子组件渲染
+            //通过QRCode二维码插件,讲字符串转化为base64位的图片,并将图片保存后传给子组件渲染
               this.showPay = true; //支付成功,弹框显示
               this.payImg = url ; //支付二维码图片=url地址
             }).catch( ()=>{
@@ -122,11 +122,11 @@ export default{
             })
           })
       }
+      
     },//关闭微信弹框
     closePayModal(){
        this.showPay = false;
     }
-
   }
 }
 </script>
