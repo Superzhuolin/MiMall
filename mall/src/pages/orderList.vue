@@ -60,6 +60,15 @@
 
           </div>
           <no-data v-if="!loading&&list.length==0"></no-data>
+          <el-pagination
+          class="pagination"
+            background
+            layout="prev,pager,next"
+            :pageSize="pageSize"
+            :total="total"
+            @current-change="handleChange"
+          >
+          </el-pagination>
         </div>
       </div>
     </div>
@@ -69,17 +78,22 @@
   import OrderHeader from './../components/OrderHeader'
   import Loading from "./../components/Loading.vue"
   import NoData from "./../components/NoData.vue"
+  import {Pagination} from "element-ui";
   export default{
     name:'order-list',
     components:{
       OrderHeader,
       Loading,
-      NoData
+      NoData,
+      [Pagination.name]:Pagination
     },
     data(){
       return{
         loading:true,//默认显示,数据回来时关闭
-        list:[]
+        list:[],
+        pageSize:10,//一页十条
+        pageNum:1,//当前页数
+        total:0
       }
     },
     mounted(){
@@ -87,10 +101,15 @@
     },
     methods:{
       getOrderList(){
-        this.axios.get("/orders").then((res)=>{
+        this.axios.get("/orders",{
+          params:{
+            pageNum:this.pageNum,
+          }
+        }).then((res)=>{
           this.loading=false;
           // this.list=[]||res.list;
           this.list=res.list;
+          this.total=res.total;
         }).catch(()=>{
           this.loading=false;
         })
@@ -109,6 +128,10 @@
             orderNo
           }
         })
+      },
+      handleChange(pageNum){
+        this.pageNum=pageNum;
+        this.getOrderList();
       }
     }
   }
