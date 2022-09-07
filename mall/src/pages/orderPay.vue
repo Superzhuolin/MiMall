@@ -16,7 +16,7 @@
               <p>收货信息：{{addresInfo}}</p>
             </div>
             <div class="order-total">
-              <p>应付总额：<span>2599</span>元</p>
+              <p>应付总额：<span>{{payment}}</span>元</p>
               <p>订单详情
                 <em class="icon-down" :class="{'up':showDetail}"
                 @click="showDetail=!showDetail"></em>
@@ -25,7 +25,7 @@
           </div>
           <!-- 订单详情 (平时隐藏)-->
           <div class="item-detail" v-if="showDetail">
-            <div class="item">
+            <div class="item"> 
               <div class="detail-title">订单号：</div>
               <div class="detail-info theme-color">{{orderId}}</div>
             </div>
@@ -62,19 +62,34 @@
     <!-- 传递给ScanPayCode  命名为payImg的img图片  -->
     <scan-pay-code v-if="showPay" @close="closePayModal" :img="payImg">
     </scan-pay-code>   
+    <!-- 支付弹框 -->
+    <modal 
+      title="支付确认"
+      btnType="3"
+      :showModal="showPayModal"
+      sureText="查看订单"
+      cancelText="未支付"
+      @cancel="showPayModal=false"
+      @submit="goOrderList"
+    >
+      <template v-slot:body>
+        <p>您确认是否完成订单</p>
+      </template>
+    </modal>
   </div>
 </template>
 <script>
 // import OrderHeader from './../components/OrderHeader'
 import ScanPayCode from './../components/ScanPayCode'
 import QRCode from "qrcode"
+import Modal from '@/components/Modal.vue'
 export default{
   name:'order-pay',
   components:{
     QRCode,
-    ScanPayCode
-  }
-  ,
+    ScanPayCode,
+    Modal
+  },
   data(){
     return{
       orderId:this.$route.query.orderNo,
@@ -84,6 +99,10 @@ export default{
       payType:"",//支付类型
       showPay:false,//是否显示微信支付弹框
       payImg:'',//微信支付的二维码弹框
+      showPayModal:false,//是否展示二次支付弹框
+      payment:0,//订单总金额
+      T:"",//定时器ID
+
     }
   },
   mounted(){
@@ -98,6 +117,7 @@ export default{
                            ${item.receiverProvince} ${item.receiverCity} 
                            ${item.receiverDistrict} ${item.receiverAddress}`
         this.orderDetail = res.orderItemVoList;
+        this.payment=res.payment;
       })
     },
     paySubmit(payType){
@@ -117,15 +137,30 @@ export default{
             //通过QRCode二维码插件,讲字符串转化为base64位的图片,并将图片保存后传给子组件渲染
               this.showPay = true; //支付成功,弹框显示
               this.payImg = url ; //支付二维码图片=url地址
+              this.loopOrderState();
             }).catch( ()=>{
               this.$message.error("微信支付二维码生成失败,请稍后重试");
             })
           })
       }
-      
     },//关闭微信弹框
     closePayModal(){
        this.showPay = false;
+       this.showPayModal=true;//是否完成支付
+       clearInterval(this.T);//关闭定时器
+    },//查询当前订单支付状态
+    loopOrderState(){
+      this.T=setInterval(()=>{
+        this.axios.get(`/orders/${this.orderId}`).then((res)=>{
+          if(res.status == 20){//已付款
+          clearInterval(this.T);//关闭定时器
+          this.goOrderList();//回到订单页面
+          }
+        },1000);
+      })
+    },
+    goOrderList(){//按下查看订单触发该方法
+      this.$router.push("/order/list");//跳转到订单详情页面
     }
   }
 }
