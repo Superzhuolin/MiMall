@@ -1,10 +1,10 @@
 <template>
   <div class="order-confirm">
-    <!-- <order-header title="订单确认">
+    <order-header title="订单确认">
       <template v-slot:tip>
         <span>请认真填写收货地址</span>
       </template>
-    </order-header> -->
+    </order-header>
 
     <!-- svg是矢量图(高清图)  开发中常用png/jpg格式(会失真)
     代码量减少且不会拉请求(可以优化前端性能) -->
@@ -175,7 +175,7 @@
   </div>
 </template>
 <script>
-// import OrderHeader from './../components/OrderHeader'
+import OrderHeader from './../components/OrderHeader'
 import Modal from "./../components/Modal";
 export default {
   name: "order-confirm",
@@ -194,6 +194,7 @@ export default {
   },
   components: {
     Modal,
+    OrderHeader
   },
   mounted() {
     this.getAddressList();
