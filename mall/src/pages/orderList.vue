@@ -59,9 +59,10 @@
             </div>
 
           </div>
-          <no-data v-if="!loading&&list.length==0"></no-data>
+          <!-- 分页功能 -->
           <el-pagination
-          class="pagination"
+            v-if="false"
+            class="pagination"
             background
             layout="prev,pager,next"
             :pageSize="pageSize"
@@ -69,6 +70,20 @@
             @current-change="handleChange"
           >
           </el-pagination>
+          <!-- 按钮加载更多 -->
+          <div class="load-more">
+            <el-button type="primary" :loading="loading" @click="loadMore">
+              加载更多
+            </el-button>
+          </div>
+          <!-- 滚动加载更多 -->
+          <div class="scroll-more"
+          
+          >
+             <img src="/public/imgs/loading-svg/loading-spinning-bubbles.svg" alt="">
+          </div>
+          <!-- 订单列表无数据 -->
+          <no-data v-if="!loading&&list.length==0"></no-data>
         </div>
       </div>
     </div>
@@ -78,18 +93,21 @@
   import OrderHeader from './../components/OrderHeader'
   import Loading from "./../components/Loading.vue"
   import NoData from "./../components/NoData.vue"
-  import {Pagination} from "element-ui";
+  import {Pagination,Button} from "element-ui";
+  import infiniteScroll from "vue-infinite-scroll";
   export default{
     name:'order-list',
     components:{
       OrderHeader,
       Loading,
       NoData,
-      [Pagination.name]:Pagination
+      [Pagination.name]:Pagination,
+      [Button.name]:Button
     },
+    directives:{infiniteScroll}, //配置
     data(){
       return{
-        loading:true,//默认显示,数据回来时关闭
+        loading:false,//默认显示,数据回来时关闭
         list:[],
         pageSize:10,//一页十条
         pageNum:1,//当前页数
@@ -101,14 +119,16 @@
     },
     methods:{
       getOrderList(){
+        this.loading=true;
         this.axios.get("/orders",{
           params:{
+            pageSize:1,//设置订单展示两条数据
             pageNum:this.pageNum,
           }
         }).then((res)=>{
           this.loading=false;
           // this.list=[]||res.list;
-          this.list=res.list;
+          this.list=this.list.concat(res.list);//拼接原数组从而实现加载更多
           this.total=res.total;
         }).catch(()=>{
           this.loading=false;
@@ -132,6 +152,11 @@
       handleChange(pageNum){
         this.pageNum=pageNum;
         this.getOrderList();
+      },
+      loadMore(){
+        this.pageNum++;
+        this.getOrderList();
+
       }
     }
   }
