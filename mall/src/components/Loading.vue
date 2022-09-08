@@ -2,7 +2,6 @@
 <template>
   <div class="loading">
     <img src="/imgs/loading-svg/loading-bars.svg" alt="" />
-    loading
   </div>
 </template>
 <script>

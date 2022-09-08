@@ -10,7 +10,7 @@ module.exports = defineConfig({
     port: 8080,  //端口
     proxy: { //代理
       '/api': {
-        target: 'http://mall-pre.springboot.cn', 
+        target: 'http://mall-pre.springboot.cn',
         // ws: true,
         changeOrigin: true,  //是否将主机头源点改为目标url地址
         pathRewrite: {
@@ -22,10 +22,10 @@ module.exports = defineConfig({
   // publicPath:'/app',  //设置前缀
   // outputDir:'dist',  //改变压缩包的文件名
   // indexPath:'index2.html',  //改变index.html的文件名
-  // productionSourceMap: true,//生产环境的source map  设置后网页不可查看源代码
-  // chainWebpack: (config) => {
-  //   config.plugins.delete('prefetch');
-  // }
+  productionSourceMap: false,//生产环境的source map  设置true后网页不可查看源代码
+  chainWebpack: (config) => {
+    config.plugins.delete('prefetch');
+  }
 })
 
 /* 

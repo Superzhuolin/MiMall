@@ -50,7 +50,7 @@ axios.interceptors.response.use(function (response) {
 Vue.use(VueAxios, axios);  //加载插件
 Vue.use(VueCookie);  //加载插件
 Vue.use(VueLazyLoad, {
-  loading: '/public/imgs/loading-svg/loading-bars.svg'
+  loading: '/imgs/loading-svg/loading-bars.svg'
 });  //加载懒加载插件
 Vue.prototype.$message=Message;//使用对象方式扩展uL插件
 Vue.config.productionTip = false;  //生产环境提示
