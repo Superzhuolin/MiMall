@@ -1,16 +1,17 @@
 import Vue from "vue"
 import Router from "vue-router"
 import Home from "./pages/home.vue"
-import Login from "./pages/login.vue"
+// import Login from "./pages/login.vue"
 import Index from "./pages/index.vue"
-import Product from './pages/product.vue'
-import Detail from './pages/detail.vue'
+// import Product from './pages/product.vue'
+// import Detail from './pages/detail.vue'
 import Cart from './pages/cart'
 import Order from './pages/order.vue'
 import OrderConfirm from './pages/orderConfirm.vue'
 import OrderList from './pages/orderList.vue'
 import OrderPay from './pages/orderPay.vue'
 import AliPay from './pages/alipay.vue'
+// import { resolve } from "core-js/fn/promise"
 
 Vue.use(Router);  //vue加载Router插件
 //export是ES6的语法,通过此方式导入对象
@@ -30,18 +31,24 @@ export default new Router({
                 }, {
                     path: '/product/:id', //定义动态路由
                     name: "product",
-                    component: Product,
+                    // component: Product,
+                    // 通过require方式加载页面主键,中间数组传入要加载的页面,外面用resolve抛出
+                    // 从而实现产品站的按需加载
+                    component: resolve=>require(["./pages/index.vue"],resolve),
                 }, {
                     path: '/detail/:id',
                     name: "detail",
-                    component: Detail,
+                    // component: Detail,
+                    component: resolve => require(["./pages/detail.vue"], resolve),
                 },
             ]
         },
         {
             path: '/login',
             name: "login",
-            component: Login,
+            // component: Login,
+            component: resolve => require(["./pages/login.vue"], resolve),
+
         },
         {
             path: '/cart',
