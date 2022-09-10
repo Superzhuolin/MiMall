@@ -35,10 +35,10 @@ axios.interceptors.response.use(function (response) {
     if (path != "#/index") {//浏览非主页 会跳转到登录页面
       window.location.href = "/#/login" 
     }
-    return Promise.reject(res);     
+    return Promise.reject(res);     //返回promise错误状态
   } else {
     Message.warning(res.msg);
-    return Promise.reject(res);     
+    return Promise.reject(res);     //返回promise错误状态
   }
 }, (error) => {//error是http状态码的拦截请求  
     let res = error.response;
