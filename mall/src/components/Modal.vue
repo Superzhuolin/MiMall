@@ -2,6 +2,7 @@
   <transition name="slide">
     <div class="modal" v-show="showModal">
       <div class="mask"></div>
+      <!-- 111 -->
       <!-- 对话框 -->
       <div class="modal-dialog">
         <!--标题 -->
