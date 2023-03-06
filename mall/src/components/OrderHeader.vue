@@ -17,7 +17,6 @@
         <div class="username">
           <a href="javascript:;">{{username}}</a>
         </div>
-
     </div>
   </div>
 </template>
